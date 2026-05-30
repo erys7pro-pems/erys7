@@ -1,0 +1,1331 @@
+<!-- 
+  ╔══════════════════════════════════════════════════════╗
+  ║  HALAMAN ADIWIYATA — MAN IC LAMPUNG TIMUR           ║
+  ║  Versi Interaktif untuk Blogspot                    ║
+  ║  Tempel ke: Posting > HTML View di Blogspot         ║
+  ╚══════════════════════════════════════════════════════╝
+-->
+<style>
+/* ─── RESET & BASE ─────────────────────────────────── */
+#adw-wrap *{box-sizing:border-box;margin:0;padding:0}
+#adw-wrap{
+  font-family:'Segoe UI',Tahoma,Geneva,Verdana,sans-serif;
+  background:#0a1f0a;
+  color:#e8f5e9;
+  max-width:860px;
+  margin:0 auto;
+  padding:0 0 40px;
+  overflow-x:hidden;
+  position:relative;
+}
+
+/* ─── PARTICLES BG ─────────────────────────────────── */
+#adw-particles{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  pointer-events:none;z-index:0;overflow:hidden;
+}
+.adw-pt{
+  position:absolute;border-radius:50%;opacity:0;
+  animation:adwFloatUp var(--d) ease-in infinite var(--dl);
+  left:var(--x);width:var(--s);height:var(--s);
+}
+@keyframes adwFloatUp{
+  0%{transform:translateY(100vh);opacity:0}
+  10%{opacity:.5}90%{opacity:.05}
+  100%{transform:translateY(-10vh);opacity:0}
+}
+
+/* ─── NAV BAR (Daftar Isi) ─────────────────────────── */
+#adw-nav{
+  position:sticky;top:0;z-index:100;
+  background:rgba(10,31,10,.95);
+  backdrop-filter:blur(8px);
+  border-bottom:2px solid #2e7d32;
+  display:flex;flex-wrap:wrap;gap:2px;
+  padding:6px 10px;
+}
+.adw-nav-btn{
+  background:rgba(46,125,50,.25);
+  border:1px solid rgba(76,175,80,.3);
+  color:#a5d6a7;
+  font-size:11px;font-weight:700;
+  padding:5px 10px;border-radius:20px;
+  cursor:pointer;transition:all .25s;
+  text-decoration:none;letter-spacing:.5px;
+  white-space:nowrap;
+}
+.adw-nav-btn:hover{background:#2e7d32;color:#fff;border-color:#4caf50}
+
+/* ─── HERO / HEADER ─────────────────────────────────── */
+#adw-hero{
+  background:linear-gradient(135deg,#1b5e20 0%,#2e7d32 40%,#1b5e20 100%);
+  padding:32px 20px 24px;
+  text-align:center;
+  position:relative;overflow:hidden;
+  border-bottom:3px solid #4caf50;
+}
+#adw-hero::before{
+  content:'';position:absolute;inset:0;
+  background:repeating-linear-gradient(45deg,transparent,transparent 12px,rgba(255,255,255,.03) 12px,rgba(255,255,255,.03) 24px);
+}
+#adw-hero-logo{
+  width:120px;height:120px;
+  border-radius:50%;
+  border:4px solid #81c784;
+  object-fit:cover;
+  display:block;margin:0 auto 16px;
+  box-shadow:0 0 40px rgba(76,175,80,.6);
+  animation:adwPulseRing 3s ease-in-out infinite;
+}
+@keyframes adwPulseRing{
+  0%,100%{box-shadow:0 0 20px rgba(76,175,80,.5)}
+  50%{box-shadow:0 0 50px rgba(76,175,80,.9),0 0 80px rgba(76,175,80,.3)}
+}
+#adw-hero h1{
+  font-size:clamp(22px,5vw,38px);font-weight:900;
+  letter-spacing:2px;color:#fff;
+  text-shadow:0 3px 10px rgba(0,0,0,.5);
+  position:relative;
+}
+#adw-hero h2{
+  font-size:clamp(13px,3vw,18px);
+  color:#a5d6a7;margin-top:6px;
+  letter-spacing:1px;position:relative;
+}
+.adw-badge-new{
+  display:inline-block;
+  background:#f57f17;color:#fff;
+  font-size:11px;font-weight:900;
+  padding:2px 10px;border-radius:20px;
+  letter-spacing:1px;animation:adwBlink 1.5s ease-in-out infinite;
+  vertical-align:middle;margin-left:6px;
+}
+@keyframes adwBlink{0%,100%{opacity:1}50%{opacity:.5}}
+
+/* ─── COUNTDOWN ─────────────────────────────────────── */
+#adw-countdown-wrap{
+  background:linear-gradient(135deg,#0d1f0d,#1b3a1b);
+  border:2px solid #388e3c;
+  border-radius:16px;
+  margin:20px 16px;
+  padding:20px 16px;
+  text-align:center;
+}
+#adw-countdown-title{
+  font-size:clamp(14px,3vw,18px);
+  font-weight:900;color:#ffee58;
+  letter-spacing:1px;margin-bottom:6px;
+}
+#adw-countdown-sub{
+  font-size:13px;color:#81c784;margin-bottom:16px;
+}
+#adw-cd-boxes{
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+}
+.adw-cd-unit{
+  background:rgba(46,125,50,.3);
+  border:2px solid #4caf50;
+  border-radius:12px;
+  padding:14px 18px;
+  min-width:72px;
+}
+.adw-cd-num{
+  font-size:clamp(28px,6vw,44px);
+  font-weight:900;color:#69f0ae;
+  display:block;line-height:1;
+  font-variant-numeric:tabular-nums;
+  transition:transform .15s;
+}
+.adw-cd-num.adw-tick{transform:scale(1.25);color:#fff}
+.adw-cd-lbl{font-size:11px;color:#81c784;letter-spacing:1px;margin-top:4px;display:block}
+.adw-cd-expired{color:#ef9a9a;font-size:16px;font-weight:700;padding:12px}
+
+/* ─── SECTION WRAPPER ───────────────────────────────── */
+.adw-section{
+  margin:24px 16px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(76,175,80,.2);
+  border-radius:16px;
+  overflow:hidden;
+}
+.adw-section-head{
+  background:linear-gradient(90deg,rgba(46,125,50,.6),rgba(27,94,32,.6));
+  padding:14px 20px;
+  display:flex;align-items:center;gap:10px;
+  cursor:pointer;user-select:none;
+  border-bottom:1px solid rgba(76,175,80,.2);
+  transition:background .25s;
+}
+.adw-section-head:hover{
+  background:linear-gradient(90deg,rgba(56,142,60,.75),rgba(46,125,50,.75));
+}
+.adw-section-head .adw-sec-icon{font-size:1.4em}
+.adw-section-head h3{
+  font-size:clamp(14px,3vw,18px);
+  font-weight:900;color:#c8e6c9;
+  letter-spacing:1px;flex:1;
+}
+.adw-sec-arrow{
+  font-size:18px;color:#81c784;
+  transition:transform .4s cubic-bezier(.4,0,.2,1);
+  flex-shrink:0;
+}
+/* Terbuka: panah ke bawah */
+.adw-section .adw-sec-arrow{transform:rotate(0deg)}
+/* Tertutup: panah ke kanan */
+.adw-section.adw-collapsed .adw-sec-arrow{transform:rotate(-90deg)}
+
+/* Trik grid-rows untuk animasi smooth tanpa max-height besar */
+.adw-section-body-outer{
+  display:grid;
+  grid-template-rows:1fr;          /* terbuka */
+  transition:grid-template-rows .45s cubic-bezier(.4,0,.2,1);
+  overflow:hidden;
+}
+.adw-section.adw-collapsed .adw-section-body-outer{
+  grid-template-rows:0fr;           /* tertutup */
+}
+.adw-section-body{
+  min-height:0;                     /* wajib untuk grid-rows trick */
+  padding:18px 16px;
+  opacity:1;
+  transition:opacity .35s ease, padding .45s cubic-bezier(.4,0,.2,1);
+}
+.adw-section.adw-collapsed .adw-section-body{
+  opacity:0;
+  padding-top:0;
+  padding-bottom:0;
+}
+
+/* ─── ANNOUNCEMENT CARD ─────────────────────────────── */
+.adw-announce{
+  background:linear-gradient(135deg,rgba(183,28,28,.2),rgba(229,57,53,.1));
+  border:2px solid #ef5350;
+  border-radius:12px;
+  padding:14px 16px;
+  margin-bottom:14px;
+}
+.adw-announce-title{
+  font-size:14px;font-weight:900;color:#ef9a9a;
+  text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;
+}
+.adw-announce p{font-size:13px;line-height:1.7;color:#ffcdd2}
+.adw-announce ul{font-size:13px;line-height:2;color:#ffcdd2;padding-left:18px;margin-top:6px}
+.adw-cool-challenge{
+  background:linear-gradient(135deg,rgba(1,87,155,.25),rgba(13,71,161,.15));
+  border:2px solid #1e88e5;
+  border-radius:12px;padding:14px 16px;margin-bottom:14px;
+}
+.adw-cool-title{font-size:14px;font-weight:900;color:#90caf9;letter-spacing:1px;margin-bottom:8px}
+.adw-cool-challenge p{font-size:13px;line-height:1.8;color:#bbdefb}
+.adw-cool-challenge ol{font-size:13px;line-height:2;color:#bbdefb;padding-left:18px;margin-top:8px}
+.adw-deadline{
+  background:rgba(255,238,88,.1);border:1px solid #f9a825;
+  border-radius:8px;padding:8px 12px;margin-top:10px;
+  font-size:12px;font-weight:700;color:#ffee58;
+}
+
+/* ─── IMAGE DISPLAY ─────────────────────────────────── */
+.adw-img-center{
+  text-align:center;margin:12px 0;
+}
+.adw-img-center img{
+  max-width:100%;border-radius:10px;
+  border:2px solid rgba(76,175,80,.3);
+  box-shadow:0 4px 20px rgba(0,0,0,.5);
+  cursor:zoom-in;transition:transform .2s;
+}
+.adw-img-center img:hover{transform:scale(1.02)}
+.adw-img-row{
+  display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin:12px 0;
+}
+.adw-img-row img{
+  max-width:calc(50% - 5px);border-radius:10px;
+  border:2px solid rgba(76,175,80,.3);
+  box-shadow:0 4px 16px rgba(0,0,0,.5);
+  cursor:zoom-in;transition:transform .2s;
+}
+.adw-img-row img:hover{transform:scale(1.03)}
+
+/* ─── LINK BUTTON ───────────────────────────────────── */
+.adw-link-btn{
+  display:inline-flex;align-items:center;gap:8px;
+  background:rgba(46,125,50,.35);
+  border:2px solid #4caf50;
+  color:#a5d6a7;
+  font-size:13px;font-weight:700;
+  padding:8px 18px;border-radius:30px;
+  text-decoration:none;
+  transition:all .25s;
+  letter-spacing:.5px;
+  margin:4px;
+}
+.adw-link-btn:hover{background:#2e7d32;color:#fff;transform:translateY(-2px);box-shadow:0 4px 14px rgba(76,175,80,.4)}
+.adw-link-btn.adw-blue{border-color:#29b6f6;background:rgba(1,87,155,.25);color:#81d4fa}
+.adw-link-btn.adw-blue:hover{background:#0288d1;color:#fff}
+.adw-link-btn.adw-orange{border-color:#ff9800;background:rgba(230,81,0,.2);color:#ffcc80}
+.adw-link-btn.adw-orange:hover{background:#e65100;color:#fff}
+.adw-link-btn.adw-red{border-color:#ef5350;background:rgba(183,28,28,.2);color:#ef9a9a}
+.adw-link-btn.adw-red:hover{background:#c62828;color:#fff}
+.adw-links-row{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0}
+
+/* ─── DATA LIST ─────────────────────────────────────── */
+.adw-data-item{
+  display:flex;align-items:flex-start;gap:10px;
+  padding:10px 0;
+  border-bottom:1px solid rgba(76,175,80,.1);
+}
+.adw-data-item:last-child{border-bottom:none}
+.adw-data-dot{
+  width:8px;height:8px;border-radius:50%;
+  background:#4caf50;margin-top:6px;flex-shrink:0;
+}
+.adw-data-label{font-size:13px;color:#c8e6c9;font-weight:600}
+.adw-data-val{font-size:13px;color:#a5d6a7}
+.adw-coming-soon{
+  display:inline-block;
+  background:rgba(249,168,37,.15);border:1px solid #f9a825;
+  color:#ffee58;font-size:11px;font-weight:900;
+  padding:2px 10px;border-radius:12px;
+}
+
+/* ─── SKEMA INFOGRAPHIC ─────────────────────────────── */
+#adw-infographic{
+  background:#0d1f0d;
+  border-radius:12px;
+  padding:20px 14px;
+  font-family:'Segoe UI',sans-serif;
+}
+.adw-inf-header{
+  background:linear-gradient(135deg,#1a6b1a,#27ae60,#1a6b1a);
+  border-radius:12px;padding:14px 18px;text-align:center;
+  margin-bottom:20px;border:3px solid #2ecc71;
+  box-shadow:0 0 30px rgba(46,204,113,.4);
+  animation:adwHeaderGlow 3s ease-in-out infinite;
+  position:relative;overflow:hidden;
+}
+.adw-inf-header::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 10px,rgba(255,255,255,.03) 10px,rgba(255,255,255,.03) 20px)}
+@keyframes adwHeaderGlow{
+  0%,100%{box-shadow:0 0 30px rgba(46,204,113,.4)}
+  50%{box-shadow:0 0 60px rgba(46,204,113,.75)}
+}
+.adw-inf-header h4{font-size:clamp(14px,3.5vw,20px);font-weight:900;color:#fff;letter-spacing:1px;position:relative}
+
+/* flow nodes */
+.adw-flow-node{
+  border-radius:12px;padding:12px 14px;text-align:center;
+  font-weight:900;font-size:clamp(12px,2.5vw,15px);
+  cursor:pointer;transition:all .3s;
+  border:2px solid rgba(255,255,255,.2);
+  box-shadow:0 4px 14px rgba(0,0,0,.4);
+  margin:4px 0;
+}
+.adw-flow-node:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 10px 24px rgba(0,0,0,.5)}
+.adw-node-src{background:linear-gradient(135deg,#e67e22,#f39c12);display:flex;align-items:center;justify-content:center;gap:10px}
+.adw-node-asrama{background:linear-gradient(135deg,#1a7f3c,#27ae60)}
+.adw-node-gedung{background:linear-gradient(135deg,#1a5276,#2980b9)}
+.adw-node-nasabah{background:linear-gradient(135deg,#7d6608,#f39c12);color:#1a1a00}
+.adw-3cols{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin:4px 0}
+.adw-act-daily{background:linear-gradient(135deg,#c0392b,#e74c3c)}
+.adw-act-weekly{background:linear-gradient(135deg,#b7950b,#f1c40f);color:#1a1000}
+.adw-act-siswa{background:linear-gradient(135deg,#117a65,#1abc9c)}
+.adw-act-guru{background:linear-gradient(135deg,#1a3f6f,#2980b9);font-size:clamp(11px,2vw,13px)}
+.adw-proc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:4px 0}
+.adw-proc-tempat{background:linear-gradient(135deg,#784212,#d35400);text-align:left;padding:14px}
+.adw-proc-bank{background:linear-gradient(135deg,#1a5229,#27ae60);text-align:left;padding:14px}
+.adw-proc-card-icon{font-size:1.8em;float:right;margin-left:8px}
+.adw-proc-h{font-size:clamp(11px,2vw,13px);font-weight:900;margin-bottom:4px;line-height:1.3}
+.adw-proc-p{font-size:clamp(10px,1.5vw,11px);opacity:.85;line-height:1.5}
+.adw-ops-badge{
+  display:inline-flex;align-items:center;gap:4px;
+  background:#f1c40f;color:#1a1000;
+  font-size:10px;font-weight:900;
+  padding:2px 8px;border-radius:12px;margin-top:6px;
+}
+.adw-outcome-card{
+  background:linear-gradient(135deg,#1a5229,#27ae60,#1a5229);
+  border-radius:14px;padding:16px 20px;text-align:center;
+  font-weight:900;font-size:clamp(13px,2.8vw,17px);
+  border:3px solid #2ecc71;cursor:pointer;
+  box-shadow:0 6px 24px rgba(39,174,96,.5);
+  animation:adwOutcomeGlow 2.5s ease-in-out infinite;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  position:relative;overflow:hidden;
+  transition:all .3s;margin:4px 0;
+}
+.adw-outcome-card:hover{transform:translateY(-4px) scale(1.02);animation:none}
+.adw-outcome-card::before{
+  content:'';position:absolute;top:-50%;left:-60%;width:40%;height:200%;
+  background:rgba(255,255,255,.15);transform:skewX(-20deg);
+  animation:adwShimmer 3s linear infinite;
+}
+@keyframes adwShimmer{0%{left:-60%}100%{left:130%}}
+@keyframes adwOutcomeGlow{
+  0%,100%{box-shadow:0 6px 24px rgba(39,174,96,.5)}
+  50%{box-shadow:0 8px 36px rgba(39,174,96,.85)}
+}
+
+/* flow connectors */
+.adw-conn{display:flex;justify-content:center;padding:6px 0}
+.adw-conn-line{width:3px;height:28px;background:linear-gradient(180deg,#4caf50,#16a085);border-radius:2px;position:relative}
+.adw-conn-line::after{content:'▼';position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);font-size:11px;color:#4caf50;animation:adwBounce 1s ease-in-out infinite}
+@keyframes adwBounce{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(4px)}}
+.adw-hbranch{display:flex;justify-content:center;height:32px;position:relative;margin:0}
+.adw-hline{position:absolute;top:0;height:3px;background:linear-gradient(90deg,#e67e22,#4caf50,#2980b9);left:18%;right:18%;border-radius:2px}
+.adw-bdown{position:absolute;top:0;width:3px;height:32px;background:#4caf50;border-radius:2px}
+.adw-bl{left:18%}.adw-bc{left:50%;transform:translateX(-50%)}.adw-br{right:18%}
+.adw-2branch{display:flex;justify-content:center;height:26px;position:relative;margin:2px 0}
+.adw-2bl{position:absolute;top:0;height:3px;background:linear-gradient(90deg,#e67e22,#4caf50);left:25%;right:25%}
+.adw-2bdl{position:absolute;top:0;width:3px;height:100%;background:#e67e22;left:25%}
+.adw-2bdr{position:absolute;top:0;width:3px;height:100%;background:#4caf50;right:25%}
+.adw-level-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  font-size:10px;font-weight:900;letter-spacing:2px;
+  padding:3px 12px;border-radius:20px;margin:6px 0 8px;
+}
+.adw-hulu{background:#e67e22;color:#fff}
+.adw-hilir{background:#16a085;color:#fff}
+.adw-lbl-row{display:flex;align-items:center;gap:8px;margin:6px 0 8px}
+.adw-lbl-line{flex:1;height:2px;background:linear-gradient(90deg,rgba(255,255,255,.1),transparent)}
+
+/* guru sub-row */
+.adw-guru-sub{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:4px 0}
+.adw-guru-empty{background:transparent;border:none;box-shadow:none}
+
+/* ─── POPUP MODAL ───────────────────────────────────── */
+#adw-popup{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.7);z-index:9999;
+  justify-content:center;align-items:center;padding:20px;
+  backdrop-filter:blur(6px);
+}
+#adw-popup.adw-open{display:flex}
+#adw-popup-box{
+  background:linear-gradient(145deg,#1a2e1a,#0d1a0d);
+  border:2px solid #4caf50;border-radius:18px;
+  padding:28px 22px;max-width:400px;width:100%;
+  box-shadow:0 20px 60px rgba(0,0,0,.8),0 0 40px rgba(76,175,80,.3);
+  animation:adwPopIn .35s cubic-bezier(.34,1.56,.64,1);
+  position:relative;
+}
+@keyframes adwPopIn{from{transform:scale(.6);opacity:0}to{transform:scale(1);opacity:1}}
+.adw-popup-close{
+  position:absolute;top:12px;right:14px;
+  background:rgba(255,255,255,.1);border:none;color:#fff;
+  width:30px;height:30px;border-radius:50%;cursor:pointer;
+  font-size:14px;display:flex;align-items:center;justify-content:center;
+  transition:background .2s;
+}
+.adw-popup-close:hover{background:#c62828}
+#adw-popup-icon{font-size:2.4em;text-align:center;display:block;margin-bottom:10px;color:#4caf50}
+#adw-popup-title{font-size:18px;font-weight:900;color:#69f0ae;text-align:center;margin-bottom:8px}
+#adw-popup-body{font-size:13px;line-height:1.75;color:rgba(255,255,255,.85);text-align:center}
+#adw-popup-tags{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;margin-top:12px}
+.adw-ptag{
+  background:rgba(76,175,80,.2);border:1px solid #4caf50;
+  color:#a5d6a7;font-size:11px;font-weight:700;
+  padding:3px 10px;border-radius:20px;
+}
+
+/* ─── LIGHTBOX ──────────────────────────────────────── */
+#adw-lightbox{
+  display:none;position:fixed;inset:0;
+  background:rgba(0,0,0,.9);z-index:10000;
+  justify-content:center;align-items:center;
+  cursor:zoom-out;
+}
+#adw-lightbox.adw-open{display:flex}
+#adw-lb-img{max-width:92vw;max-height:88vh;border-radius:8px;box-shadow:0 8px 40px rgba(0,0,0,.8)}
+#adw-lb-close{
+  position:fixed;top:14px;right:18px;
+  background:rgba(255,255,255,.15);border:none;color:#fff;
+  font-size:22px;width:40px;height:40px;border-radius:50%;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+}
+
+/* ─── SEPARATOR ─────────────────────────────────────── */
+.adw-div{
+  height:1px;
+  background:linear-gradient(90deg,transparent,rgba(76,175,80,.4),transparent);
+  margin:16px 0;
+}
+
+/* ─── STATS BOX ─────────────────────────────────────── */
+.adw-stats-row{
+  display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:10px 0;
+}
+.adw-stat-card{
+  background:rgba(76,175,80,.1);border:1px solid rgba(76,175,80,.3);
+  border-radius:12px;padding:14px 12px;text-align:center;
+}
+.adw-stat-num{
+  font-size:clamp(24px,5vw,36px);font-weight:900;
+  color:#69f0ae;display:block;line-height:1;
+}
+.adw-stat-lbl{font-size:11px;color:#81c784;margin-top:4px;letter-spacing:.5px;display:block}
+
+/* ─── EMBED IFRAME ──────────────────────────────────── */
+.adw-embed-wrap{
+  border-radius:10px;overflow:hidden;
+  border:2px solid rgba(76,175,80,.3);
+  margin:10px 0;
+}
+.adw-embed-wrap iframe{display:block;width:100%;border:none}
+
+/* ─── RESPONSIVE ────────────────────────────────────── */
+@media(max-width:500px){
+  .adw-3cols{grid-template-columns:1fr}
+  .adw-proc-grid{grid-template-columns:1fr}
+  .adw-2cols{grid-template-columns:1fr}
+  .adw-guru-sub{grid-template-columns:1fr}
+  .adw-stats-row{grid-template-columns:1fr 1fr}
+  .adw-img-row img{max-width:100%}
+}
+</style>
+
+<!-- ░░░░░ WRAPPER ░░░░░ -->
+<div id="adw-wrap">
+
+<!-- Partikel latar -->
+<div id="adw-particles"></div>
+
+<!-- ══ NAVIGATION ══════════════════════════════════════ -->
+<div id="adw-nav">
+  <a class="adw-nav-btn" href="#adw-pengumuman">📢 Pengumuman</a>
+  <a class="adw-nav-btn" href="#adw-dasar">📋 Dasar</a>
+  <a class="adw-nav-btn" href="#adw-implementasi">⚙️ Implementasi</a>
+  <a class="adw-nav-btn" href="#adw-skema">♻️ Skema</a>
+  <a class="adw-nav-btn" href="#adw-konsep">💡 Konsep</a>
+  <a class="adw-nav-btn" href="#adw-informasi">📊 Informasi</a>
+  <a class="adw-nav-btn" href="#adw-publikasi">📰 Publikasi</a>
+  <a class="adw-nav-btn" href="#adw-galeri">🖼️ Galeri</a>
+</div>
+
+<!-- ══ HERO ════════════════════════════════════════════ -->
+<div id="adw-hero">
+  <img id="adw-hero-logo"
+    src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8bnk9d7qHDxhySqjN11bIlHW9cHmQ51hGM-DHiYgxdHut318bzeazwR97K9bLDUPamsA0a3Uirz6xliAuxswv9KA9oM9Ow30m1mvLuSaT3eOUavvjCAbk7syYgjsUDZZVDm10RhZ_dUUxYCI7plHou9dC98k9PLi2oVrFGQtIrz1iU3fHKHMbbDu3WVc/w187-h200/adiwiyata.jpeg"
+    alt="Logo Adiwiyata"
+    onerror="this.style.display='none'">
+  <h1>🌿 ADIWIYATA</h1>
+  <h2>MAN Insan Cendekia Lampung Timur</h2>
+  <div style="margin-top:12px">
+    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEihKULraigR2aqE_3nXBH5zg0qMmC6Q429cxcnP5wTBV_tiVPiAydAkdTgvU5R_EekyteoLBz9TIc2ab9JdjeHyhayaKMVT7326Tw5UxhKdxPJS3_5Dy7FC6y3YXA7IUqOQEbdZ28_-TTAM3H1pnNMTiMZy1c7to6WgYGSiJ3ejGhVN_prqTaHFWHjgyEA/w640-h200/Presentation1_01.png"
+      style="max-width:100%;border-radius:10px;margin-top:10px;border:2px solid rgba(129,199,132,.4)"
+      alt="Banner Adiwiyata"
+      onerror="this.style.display='none'">
+  </div>
+</div>
+
+<!-- ══ COUNTDOWN ════════════════════════════════════════ -->
+<div id="adw-countdown-wrap">
+  <div id="adw-countdown-title">⏱ HITUNG MUNDUR</div>
+  <div id="adw-countdown-sub">Hari Peduli Sampah Nasional 2026 — <strong>21 Februari 2026</strong></div>
+  <div id="adw-cd-boxes">
+    <div class="adw-cd-unit"><span class="adw-cd-num" id="cd-d">--</span><span class="adw-cd-lbl">HARI</span></div>
+    <div class="adw-cd-unit"><span class="adw-cd-num" id="cd-h">--</span><span class="adw-cd-lbl">JAM</span></div>
+    <div class="adw-cd-unit"><span class="adw-cd-num" id="cd-m">--</span><span class="adw-cd-lbl">MENIT</span></div>
+    <div class="adw-cd-unit"><span class="adw-cd-num" id="cd-s">--</span><span class="adw-cd-lbl">DETIK</span></div>
+  </div>
+</div>
+
+<!-- ══ PENGUMUMAN ════════════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-pengumuman">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">📢</span>
+    <h3>PENGUMUMAN <span class="adw-badge-new">BARU!</span></h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <!-- COOL SCHOOL CHALLENGE -->
+    <div class="adw-cool-challenge">
+      <div class="adw-cool-title">🌏 COOL SCHOOL CHALLENGE — UN/PBB INDONESIA <span class="adw-badge-new">BARU!</span></div>
+      <div class="adw-img-row">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEivz5jzGIDTi1Fht-nNTi_TBEKbgNSOkDBaTVBtj1ByhuDW6TCNTrChysePIkUBA1Vrcb6_pxWIEQKd12gh1CSOLtudGfRdeOxyB9McTZj50ZOZX09FDdi4zdBbsrO_G2Gc2CqoaN6wJbVMLe3O_abyZCtWxdvyaUF8r5P7Kh3PnYCtY04_3l6WqHx0ouU/s320/WhatsApp%20Image%202026-05-09%20at%2020.55.27.jpeg" alt="Cool School Challenge 1" onclick="adwLightbox(this)">
+        <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEijHhOnh5WdgtLkZj8978qyRaqjJCUPEdlJoz31HVZDGqKYz94GbLwEUWypX7_IsUeq5lxyhPwbDVjv1Effv_mFUJWnSUaWesD03tApHWelMHuOsLhNRgVNAyH-UPzFzaC6PYV5Elp3WjU_BuJw1QXGBUoD3HO_06ioY2CJ9co73ZtHJBpTByxnqkPOvZM/s320/WhatsApp%20Image%202026-05-09%20at%2020.55.39.jpeg" alt="Cool School Challenge 2" onclick="adwLightbox(this)">
+      </div>
+      <p>Sekolahmu udah ngapain aja buat menjaga Bumi? Tunjukkan aksi keren dalam video max 60 detik!</p>
+      <p style="margin-top:8px">Aksi yang bisa ditampilkan:</p>
+      <ol>
+        <li>♻️ Pilah sampah</li>
+        <li>🌿 Buat kompos</li>
+        <li>☀️ Pakai solar panel</li>
+        <li>🚲 Naik sepeda ke sekolah</li>
+        <li>🌱 Urban farming</li>
+      </ol>
+      <p style="margin-top:8px"><strong>Cara ikut:</strong> Upload di Instagram Reels atau TikTok, tag @UNinIndonesia @UNEP @UnitedNations, pakai hashtag #NowForClimate #CoolSchool #WorldEnvironmentDay, lalu kumpulkan link ke Google Form.</p>
+      <div class="adw-deadline">📅 Deadline: Selasa, 2 Juni 2026, pukul 17.00 WIB &nbsp;|&nbsp; 🏆 Hadiah jutaan Rupiah untuk 2 video terbaik!</div>
+      <div class="adw-links-row" style="margin-top:10px">
+        <a class="adw-link-btn adw-blue" href="https://bit.ly/CSCWED2026" target="_blank">📝 Daftar Sekarang</a>
+      </div>
+    </div>
+
+    <!-- UPLOAD DOKUMENTASI -->
+    <div class="adw-announce">
+      <div class="adw-announce-title">📸 Upload Foto Dokumentasi Project Co-Kurikuler <span class="adw-badge-new">BARU!</span></div>
+      <div class="adw-links-row">
+        <a class="adw-link-btn" href="https://drive.google.com/drive/folders/1FZl51goxff2pgGpAEB5Ns44zWaoQUznn?usp=sharing" target="_blank">📁 Klik di Sini</a>
+      </div>
+    </div>
+
+    <!-- SAMBUTAN -->
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffb74d"></div>
+      <div>
+        <div class="adw-data-label">Sambutan Pembina Adiwiyata (Kegiatan ADIPORA 2026)</div>
+        <div class="adw-links-row"><a class="adw-link-btn adw-orange" href="https://arsipicku01.blogspot.com/p/ts.html" target="_blank">📄 Klik di Sini</a></div>
+      </div>
+    </div>
+
+    <!-- JAMBORE -->
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#81c784"></div>
+      <div>
+        <div class="adw-data-label">🏕️ Jambore Generasi Hijau — <strong style="color:#a5d6a7">21–26 Agustus 2026</strong></div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-blue" href="https://www.instagram.com/p/DXPhrgrEo2T/?img_index=4" target="_blank">📸 Instagram</a>
+          <a class="adw-link-btn" href="https://docs.google.com/spreadsheets/d/1kx7lBcS4FjiZLk_9j4XL2CcXzEb57Vo1oaWDFjbIVFs/edit?gid=0#gid=0" target="_blank">📋 Isi Usulan Siswa</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PENYETORAN SAMPAH -->
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">🗑️ Kegiatan Penyetoran Sampah — 18 April 2026</div>
+        <p style="font-size:12px;color:#81c784;margin-top:4px">(Video tersedia di halaman Blogspot asli)</p>
+      </div>
+    </div>
+
+    <!-- KUISIONER -->
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#64b5f6"></div>
+      <div>
+        <div class="adw-data-label">📊 Analisis Kuisioner Adiwiyata Provinsi</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-blue" href="https://docs.google.com/presentation/d/1VoQVflOFToYztGqW-hjKddCJlDwO5vHf/edit?usp=sharing" target="_blank">🔗 Link</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- UPLOAD BANNER -->
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ff8a65"></div>
+      <div>
+        <div class="adw-data-label">🖼️ Upload Desain Banner Launching 3×1 M</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-orange" href="https://drive.google.com/drive/folders/1Da3wK5ptcIaD0Z6BZUIyxBGoslj44Jde?usp=sharing" target="_blank">📁 Klik di Sini</a>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ DASAR ADIWIYATA ══════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-dasar">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">📋</span>
+    <h3>DASAR ADIWIYATA</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh8bnk9d7qHDxhySqjN11bIlHW9cHmQ51hGM-DHiYgxdHut318bzeazwR97K9bLDUPamsA0a3Uirz6xliAuxswv9KA9oM9Ow30m1mvLuSaT3eOUavvjCAbk7syYgjsUDZZVDm10RhZ_dUUxYCI7plHou9dC98k9PLi2oVrFGQtIrz1iU3fHKHMbbDu3WVc/w187-h200/adiwiyata.jpeg"
+        alt="Logo Adiwiyata" style="max-width:160px" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Peraturan Menteri LHK tentang Adiwiyata</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/file/d/12fhR_4FYOSn-_87auiHPUSIh7q7llKxO/view?usp=drive_link" target="_blank">📄 Buka Dokumen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Komponen, Bobot, Standar, Indikator & Skor</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/file/d/1jS7tfjyO-7t9QAru4_iRPslPJnIkqSVE/view?usp=drive_link" target="_blank">📄 Buka Dokumen</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">SK Adiwiyata</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/file/d/1B8vQ3zXq1vsf3n1vUvH9g2p4Ww9Ej9X_/view?usp=sharing" target="_blank">📄 Buka Dokumen</a>
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ IMPLEMENTASI ══════════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-implementasi">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">⚙️</span>
+    <h3>IMPLEMENTASI</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Agenda Adiwiyata</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-blue" href="https://docs.google.com/spreadsheets/d/1YqsD8TCw6TVz4LRRNYuEKdXUAwtO6ykc/edit?usp=drive_link" target="_blank">📅 Klik di Sini</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Kader Adiwiyata — Pembagian Tugas</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-blue" href="https://docs.google.com/spreadsheets/d/17WzVhEafK2B7MAlm6HrXOtLp76-FScdGp3XFls4L7EE/edit?usp=drivesdk" target="_blank">👥 Pembagian Tugas</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-div"></div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffb74d"></div>
+      <div>
+        <div class="adw-data-label">Data Administrasi Bank Sampah 2025–2026 (Periode 2)</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-orange" href="https://docs.google.com/spreadsheets/d/1oOKNsh51khweMYTp8GDUhKDfV8kro1Xx/edit?usp=sharing" target="_blank">📊 Buka Spreadsheet</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffb74d"></div>
+      <div>
+        <div class="adw-data-label">Data Administrasi Bank Sampah Periode 1</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-orange" href="https://docs.google.com/spreadsheets/d/17qIPLYVItRBhg76t8xUqtE0Maupk1GZT/edit?usp=drive_link" target="_blank">📊 Buka Spreadsheet</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffb74d"></div>
+      <div>
+        <div class="adw-data-label">Data Administrasi Bank Sampah Periode Uji Coba</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-orange" href="https://docs.google.com/spreadsheets/d/1IAATusFHDdva5vK4x6ykKMYLVB9wDRTv/edit?gid=211833803" target="_blank">📊 Buka Spreadsheet</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Rencana Anggaran Belanja Adiwiyata</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://docs.google.com/spreadsheets/d/1tmg4GnR0sElCpG772sX54b4TNFjoUciy1oLyVTwkePc/edit?usp=sharing" target="_blank">📊 Buka Spreadsheet</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-div"></div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ce93d8"></div>
+      <div>
+        <div class="adw-data-label">Contoh Adiwiyata Nasional — MAN 1 Lampung Barat</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/drive/folders/1Nk0peHTs5WHstwNpqOMV30rD3zLzBroD" target="_blank">📁 Buka Folder</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ce93d8"></div>
+      <div>
+        <div class="adw-data-label">Materi 1 — Pengelolaan Sampah Semarang 2015</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://docs.google.com/presentation/d/1-Ucd3SppO23-aMZ0MVFhcEQo6lxfQRZ5/edit?usp=sharing" target="_blank">📑 Buka Materi</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- KONSEP BUDIDAYA -->
+    <div class="adw-div"></div>
+    <div style="font-size:14px;font-weight:900;color:#a5d6a7;margin-bottom:10px">🪱 KONSEP BUDIDAYA</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffcc80"></div>
+      <div>
+        <div class="adw-data-label">Kandang Maggot</div>
+        <div class="adw-img-center">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEh6ASwo8ozde-dkNzlPxw1l9RalyeDRGVyZITDWY4RYZndLs3upyhxrkkwf1dR0WCWtkipDRmsGGJCNaier7HcPD00_7nqhbxP-_Rk6ErcQNUJLZOlaW2iIz5q5dHOaHyhcrf28skh3U64y5IS-xJH0epY89e6NA6HDrR3f9H0hbzVNErkYrcMlFLaRF1w=w480-h640"
+            alt="Kandang Maggot" style="max-width:200px" onclick="adwLightbox(this)">
+        </div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn adw-red" href="https://www.youtube.com/playlist?list=PLNLpNtG69NK9XoOcfF1VB3EfPXm8wDB86" target="_blank">▶ YouTube — Pembuatan Kandang Maggot</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ffcc80"></div>
+      <div>
+        <div class="adw-data-label">Komposting Maggot</div>
+        <div class="adw-img-center">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiKCtRR00TyrX4Fqx7tDnFwfQsOsU7Ps_YuOjCTbkRjSwNKIvjFK3dSb7BNbaQd3aeSLf-ImDOGo_iUJDXzj5aYTC7aE51F301-wV69wLxRFNRy14Vbmu3AmjfkqcTIjBPFhAOVrM7V98JIRwGVTS-M-WdQn9dprnem21HYHdgLnAW7npU1wd_Yg18lJ8M"
+            alt="Komposting Maggot" style="max-width:200px" onclick="adwLightbox(this)">
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ SKEMA PENGELOLAAN SAMPAH ══════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-skema">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">♻️</span>
+    <h3>SKEMA PENGELOLAAN SAMPAH</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div id="adw-infographic">
+      <div class="adw-inf-header">
+        <h4>♻ RENCANA PENGELOLAAN SAMPAH ANORGANIK<br>DI MAN IC LAMPUNG TIMUR</h4>
+      </div>
+
+      <!-- HULU -->
+      <div class="adw-lbl-row">
+        <span class="adw-level-badge adw-hulu">▲ HULU</span>
+        <div class="adw-lbl-line"></div>
+      </div>
+
+      <!-- Sumber -->
+      <div class="adw-flow-node adw-node-src" onclick="adwPopup('sumber')">
+        🗑 SUMBER SAMPAH
+      </div>
+
+      <div class="adw-conn"><div class="adw-conn-line"></div></div>
+      <div class="adw-hbranch">
+        <div class="adw-hline"></div>
+        <div class="adw-bdown adw-bl"></div>
+        <div class="adw-bdown adw-bc"></div>
+        <div class="adw-bdown adw-br"></div>
+      </div>
+
+      <!-- 3 Sumber -->
+      <div class="adw-3cols">
+        <div class="adw-flow-node adw-node-asrama" onclick="adwPopup('asrama')">🏢<br>ASRAMA</div>
+        <div class="adw-flow-node adw-node-gedung" onclick="adwPopup('gedung')">🏫<br>GEDUNG PEMBELAJARAN</div>
+        <div class="adw-flow-node adw-node-nasabah" onclick="adwPopup('nasabah')">👥<br>NASABAH</div>
+      </div>
+
+      <div class="adw-conn"><div class="adw-conn-line"></div></div>
+
+      <!-- Aktivitas -->
+      <div class="adw-3cols">
+        <div class="adw-flow-node adw-act-daily" onclick="adwPopup('daily')">📅<br>KEGIATAN SEHARI-HARI</div>
+        <div class="adw-flow-node adw-act-weekly" onclick="adwPopup('weekly')">📆<br>KEGIATAN MINGGUAN/BULANAN</div>
+        <div class="adw-flow-node adw-act-siswa" onclick="adwPopup('siswa')">🎓<br>SISWA-SISWI</div>
+      </div>
+
+      <!-- Guru sub -->
+      <div class="adw-guru-sub" style="margin-top:6px">
+        <div></div>
+        <div class="adw-flow-node adw-act-guru" onclick="adwPopup('guru')">🧑‍🏫<br>GURU & KARYAWAN RUMAH DINAS</div>
+      </div>
+
+      <div class="adw-conn"><div class="adw-conn-line"></div></div>
+
+      <!-- Proses -->
+      <div class="adw-proc-grid">
+        <div class="adw-flow-node adw-proc-tempat" onclick="adwPopup('tempat')">
+          <span class="adw-proc-card-icon">🗑</span>
+          <div class="adw-proc-h">TEMPAT SAMPAH TERPILAH</div>
+          <div class="adw-proc-p">Partisipasi Warga Madrasah</div>
+          <div class="adw-proc-p" style="margin-top:6px">⛏ Penanganan oleh Petugas Kebersihan</div>
+        </div>
+        <div class="adw-flow-node adw-proc-bank" onclick="adwPopup('bank')">
+          <span class="adw-proc-card-icon">⚖</span>
+          <div class="adw-proc-h">BANK SAMPAH INSAN CENDEKIA</div>
+          <div class="adw-proc-p">Pelayanan pengelolaan sampah terpusat</div>
+          <div class="adw-ops-badge">📅 Sabtu & Ahad</div>
+        </div>
+      </div>
+
+      <div class="adw-2branch">
+        <div class="adw-2bl"></div><div class="adw-2bdl"></div><div class="adw-2bdr"></div>
+      </div>
+
+      <!-- HILIR -->
+      <div class="adw-lbl-row">
+        <div class="adw-lbl-line"></div>
+        <span class="adw-level-badge adw-hilir">▼ HILIR</span>
+      </div>
+
+      <div class="adw-outcome-card" onclick="adwPopup('outcome')">
+        <span>💰</span>
+        MENAMBAH NILAI JUAL DAN GUNA SAMPAH BAGI WARGA MADRASAH
+      </div>
+
+      <p style="text-align:center;font-size:11px;color:rgba(255,255,255,.3);margin-top:14px;font-style:italic">
+        Klik setiap elemen untuk info detail · MAN IC Lampung Timur
+      </p>
+    </div>
+
+    <!-- Gambar Rencana -->
+    <div class="adw-img-center" style="margin-top:16px">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhXQ3FwPe7UGDQtx9Lb1cGyOXYLWCPYfD2_AtSi4R5WgtXFBfQ1U47GEen4xXBe9T3SyXb5AdJ-aT3ndLcNwppGBsFn7Q7hA8_SLRZh6VcyyG9QCQRPPLOsKuflvI0u3D5IpgIcOeNK2PFl-a-we8ztGumqTosJiww2P3EqnlejHr2B3aSiJbuc0n7DcbU/w640-h362/RENCANA_01.png"
+        alt="Rencana 1" onclick="adwLightbox(this)">
+    </div>
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhID4s29MzXUPgWLaGezjX2XKJNDr9bpIogoaRPfHkhzi1PPZ9EA_v8EkFIm9E30NMkBWashTmNoWtGsU2J3KTSo2a1EukgL4E9719TZWg4c53f2DDmskHkhoQyGMXZcNjHYB2MCFE0683GiSk0gWnzpLTFRk_G9rQZZskJkIN2eAfg3mfDAlzbn_Q0QaY/w640-h362/RENCANA_02.png"
+        alt="Rencana 2" onclick="adwLightbox(this)">
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ KONSEP PENGELOLAAN SAMPAH ══════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-konsep">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">💡</span>
+    <h3>KONSEP PENGELOLAAN SAMPAH</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEidP_mgh9aMDeEbV9TSjEw8CObIzVTOX1jbalOpbKT3f1qXKmkSNcIhagb24AEEIw1bonfW4LVSjHm4epZKmt8YkTMljpZSAhseEbr56UrkTDu51VXxhgzVyImQ2FiN6YY0yEjkjXYWyhLVXaukvWCcypKmQmpREX_1BOK4rM9XwPh9K1FHyLSwWPphPg4/w640-h360/Screencast%20from%202025-07-21%2013-51-18.gif"
+        alt="Konsep Pengelolaan Sampah 1" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgs7mJMeoEXwEf1I8gG25I83t_VL7JMP3nnwrWCDd84AXcaKvUHJuA45jbNRuOVBzs3iqgq5XjYC_jhIKZ1hzZ_7WeZAxacVTwITqceFGBogWYieHJFDRNOJYWsYpeO6Lj0ODEb_eFh_a-CmwUIIlsRsjrsHXnAlt508P6rKlJx9ot5J3emg1WsCX29UZs/w640-h360/Screencast%20from%202025-07-21%2014-27-45.gif"
+        alt="Konsep Pengelolaan Sampah 2" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjFhn26cUkO_xpBAPedRKMEPZdpz8gdMxRABfnA1FYjze9TT8Re_XtlISlDa7KMnZyReScnzP2BKRH9SuZEy3zywRAZPxjCQcxwqasbiL4i8UQs1P0Ra7WHpIuMfpB1bngQpKNmSx8yORqAJoZ_mW9nN0pE_UubZTgfj4M39e16lgALAKL7MnkO9HB2OB8/w640-h360/ADIWIYATA%20DATA_10.png"
+        alt="Data Adiwiyata" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-div"></div>
+    <div style="font-size:14px;font-weight:900;color:#a5d6a7;margin-bottom:10px;text-align:center">🏢 CONTOH DESAIN KANTOR BANK SAMPAH</div>
+
+    <div class="adw-img-row">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEhOrZ0iDdMAkj_yGheWezp4fGd2XD1h-lCmDaDMpOqe5D-u0qzfYJtg7-1cg6PadYzztHp2M0G9zYxDTIDAZGE69yEi5ViIpP_NCRYYRJTDbHCUQ-RmyLoKPzgCisC8WTl2-TSLOkcwiUD6reUsx_AckYmRONAt38HA1i8yWenoxvroZi4SjKC3bqkxR20/w200-h113/ce45b3f7-f3d6-4830-856b-fd5a4a266091_600x338.webp.webp"
+        alt="Desain Kantor 1" onclick="adwLightbox(this)">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg7H9wxqJI3kcOnqkPCadNZnNdy0kjQNw0LdGyoXeZmS7Nv7Ttb5mvMYrYOQkJMhQyOuYTqYE4PbuKLVR8GbVGJM7epaRG3u1pzIjohScylJKdZoOyEPHKI8Zn7JoiqKVoJRg5DkoaTR5xEpHYuFwcrfowjd3JZHxcqajIcZkgWSqUlQY7gTo96IOBSrtU/w200-h150/Screenshot%20from%202024-10-01%2019-02-00.png"
+        alt="Desain Kantor 2" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-div"></div>
+    <div style="font-size:14px;font-weight:900;color:#a5d6a7;margin-bottom:10px;text-align:center">🏦 KANTOR BANK SAMPAH KITA</div>
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEg_eHUZ9xmB7btmpykZ6oaZO70PWxrgBL20O5vTH_o7nBmK0AqNtt3cMcG0Oh5U2zcDGkDoe58QQ4Nl4iG0Q-D-a2je-IAamanbuJyWVYehEzAnWPYxdUmZI1ayyW4qKouIUP9ApGbDDh6KHq-8IqPDVJs5xszpOdCIpY8X35LqeTvYdTBE2JtKxSPW1VQ/w474-h640/WhatsApp%20Image%202026-05-02%20at%2010.50.24.jpeg"
+        alt="Kantor Bank Sampah" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-div"></div>
+    <div style="text-align:center">
+      <div style="font-size:13px;color:#a5d6a7;margin-bottom:8px">LOGO BANK SAMPAH INSAN CENDEKIA</div>
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjcbUi75F5_xUcZ9OY2C1g59-ZbdDhjQFAcu5FUf0iI5A4RFMyeWpUed54cJEqkAxybQiiWlOjQ2-4xqUFmNo_jX4LlWoRE7yYdUSWP6eQQe2Pdqv0fh1jZ1Lo0o8Sp0bJBWsEuWWq1BLLiDvdcSssEEtZ8-PrF7IlYZ_qXELL7706mj-nPTXtUyDUzfr0/s320/LOGO%20BSIC%20(2)%20(1).png"
+        alt="Logo BSIC" style="max-width:200px;border-radius:50%;border:3px solid #4caf50;box-shadow:0 0 30px rgba(76,175,80,.4)"
+        onclick="adwLightbox(this)">
+      <div class="adw-links-row" style="justify-content:center;margin-top:10px">
+        <a class="adw-link-btn adw-blue" href="https://erysantosa7pro.wixsite.com/bank-sampah-insan-ce" target="_blank">🌐 Website Bank Sampah</a>
+        <div class="adw-img-center">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjXkFMCC88Y1SWJ_CS12kY7uQF30b-FW133MnwM4RDn_H5CUhXG0VSeiNvFAl_vDsBbE7ukfsjPaOamjaSJ7miiftnzl7esT4Dsdrt3aP9kGeeaDj3_Bdn-_a_y4_GskkvhG1H7lZCaqFlWK0VB4QJq2noM9NA6qvMLUjbnCfc7nkFVodZXEacghE5g71c/w640-h292/WhatsApp%20Image%202025-06-11%20at%2015.18.34.jpeg"
+            alt="Transisi Website" style="max-width:100%;margin-top:10px" onclick="adwLightbox(this)">
+        </div>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ INFORMASI UMUM ════════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-informasi">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">📊</span>
+    <h3>INFORMASI UMUM</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div style="font-size:13px;font-weight:900;color:#ffee58;text-align:center;margin-bottom:12px">
+      KEMAJUAN ADIWIYATA MAN IC LAMPUNG TIMUR
+    </div>
+
+    <!-- Stats Penghijauan -->
+    <div class="adw-stats-row">
+      <div class="adw-stat-card">
+        <span class="adw-stat-num">283</span>
+        <span class="adw-stat-lbl">🌳 POHON DI MAN IC</span>
+      </div>
+      <div class="adw-stat-card">
+        <span class="adw-stat-num">700</span>
+        <span class="adw-stat-lbl">🌱 BIBIT DITANAM</span>
+      </div>
+    </div>
+
+    <div class="adw-div"></div>
+
+    <!-- Data Bank Sampah -->
+    <div style="font-size:13px;font-weight:900;color:#a5d6a7;margin-bottom:10px">📦 DATA BANK SAMPAH</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Data Nasabah Terkini</div>
+        <span class="adw-coming-soon">-SEGERA-</span>
+      </div>
+    </div>
+
+    <div style="font-size:13px;font-weight:900;color:#a5d6a7;margin:12px 0 8px">🗂️ SAMPAH ANORGANIK — LAYAK DITABUNG</div>
+
+    <!-- Embedded Spreadsheet -->
+    <div class="adw-embed-wrap">
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ9pYvMK3LUJ1dpX-s_daH6s6WApYpgdaz2s2uGkq8vilkaUo_VUSGe8U_W3gkKA/pubhtml?gid=2090890819&single=true&widget=false&headers=false"
+        height="180" scrolling="no" style="margin:-30px 0 0;min-width:100%"></iframe>
+    </div>
+
+    <!-- Chart -->
+    <div class="adw-embed-wrap" style="margin-top:10px">
+      <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vTQ9pYvMK3LUJ1dpX-s_daH6s6WApYpgdaz2s2uGkq8vilkaUo_VUSGe8U_W3gkKA/pubchart?oid=133910229&format=interactive"
+        height="200" frameborder="0" scrolling="no" seamless="" style="width:100%"></iframe>
+    </div>
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiZP3oL6x3ziby70T9C9caHlLoAENBhH4fQKoB6l0WGRCDo4u3w8uDJpXSOX_DFN5p-uqjepE2kO4v-wwQQwMxIY-CUBtLUWEFM63gRS8ermoYp87slVaYz_463sPFivjTSa3AEMYwpT5FOkKZs-BQWm5_FRcMrzAALNJXrcyQZz1hFsVapd-lR9dwoZhQ=w640-h204"
+        alt="Data Sampah" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgKL6Hxrdq99QGje_X_fNBiUkfozm1Dc51Mtx_kOzIU31rCZYxV9PxQ1ULDXeubMNV1WU0C4cCrFVcz5nNKVx7R4q1z0gO-bP1aH5TjVTaMPunNhofYxsPJr6q7_MRGTH-c0khnlLxrdGc-LVDgzsGWUrgEHCtnoEdPCoGYO7W8IywO1weCvmy9wpmLrp0=w640-h284"
+        alt="Data Sampah Periode" onclick="adwLightbox(this)">
+    </div>
+
+    <div class="adw-div"></div>
+
+    <div style="font-size:13px;font-weight:900;color:#80deea;margin-bottom:8px">♻️ LAYAK DIOLAH</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#4fc3f7"></div>
+      <div>
+        <div class="adw-data-label">#ECOBRICK</div>
+        <div class="adw-img-row" style="margin-top:8px">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiqYdXxeM_ZSAm08dX0TT0bGOiCaQMx9HbF5MYOG4tlseWObkDLf2Whc7kHxf6l7w-Ax4MfZJw6NDdzL4BDg23kN5wps8tEjDZZy3vUx5mTHA8lxOgkAgtvpFEae8_gnX6g20haArGtCzxYGbt0zHBdm6ICuHmmiH14G15zgf41NgizsFhGpi0jjn-uOeQ=w200-h191"
+            alt="Ecobrick" onclick="adwLightbox(this)" style="max-width:160px">
+          <img src="https://blogger.googleusercontent.com/img/a/AVvXsEje_IPjTvZlL6YzSKs7B8PuhUfLyFOnXo0XtMh1oLX9xKCURUvMc6w2HSk4AIWppFiw7LZIdp0Vr3rlteJ3OwHjcScJWPTBZgCFXSDkzdtNQgzus9qVlyWzrcb3xsqC7K-5YF5dRKzwIQvGjnZyqaxAdtUP4oCMpBqsd20w0ZcqEb_NuilahC9NlJZvxIU=w200-h107"
+            alt="Ecobrick Label" onclick="adwLightbox(this)" style="max-width:160px">
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#90a4ae"></div>
+      <div><div class="adw-data-label">#BATAKO</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#ff8a65"></div>
+      <div><div class="adw-data-label">#KERAJINAN</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+    <div class="adw-div"></div>
+    <div style="font-size:13px;font-weight:900;color:#a5d6a7;margin-bottom:8px">🌿 SAMPAH ORGANIK</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div><div class="adw-data-label">Kompos Padat</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div><div class="adw-data-label">Kompos Cair</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+    <div class="adw-div"></div>
+
+    <div style="font-size:13px;font-weight:900;color:#a5d6a7;margin-bottom:8px">🌳 DATA PENGHIJAUAN</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#81c784"></div>
+      <div>
+        <div class="adw-data-label">Penyiraman Tanaman Hibah dari TNWK</div>
+        <div class="adw-data-val">Jadwal: <span class="adw-coming-soon">-SEGERA-</span></div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/drive/folders/14ty2_omfhwjpH6FmU66lEw5FHI_1oHrR?usp=sharing" target="_blank">📸 Upload Foto</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-div"></div>
+
+    <div style="font-size:13px;font-weight:900;color:#a5d6a7;margin-bottom:8px">🤝 KERJASAMA</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div><div class="adw-data-label">Dengan Instansi Lingkungan</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div>
+        <div class="adw-data-label">Dengan Instansi Puskesmas</div>
+        <div class="adw-links-row">
+          <a class="adw-link-btn" href="https://drive.google.com/file/d/17w3cdwp76v1B9dd1Kg3rMU9Cp6mc2_-h/view?usp=drivesdk" target="_blank">📄 Klik di Sini</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot"></div>
+      <div><div class="adw-data-label">Dengan Pengepul Sampah</div><span class="adw-coming-soon">-SEGERA-</span></div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ PUBLIKASI ══════════════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-publikasi">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">📰</span>
+    <h3>PUBLIKASI</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div style="font-size:13px;color:#a5d6a7;margin-bottom:10px">MEDIA MASSA</div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#64b5f6"></div>
+      <div>
+        <div class="adw-img-center">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEh86OsxEthdjMLFWbGEHcvE8d8l_KIpom64pbD23P7Ap60pkebQcPcQvivYKzcEp4mKPl1uwaig9pXZGZEQonh8LpcetwAy97oGOxJ48ScSll2VMq__DPhxitbPISIcrdGoHz4U3hKhLNGGc1XTz826NHl5qt0-SIooP6X9vBi-EckEH3tg1bbmnwglz-4/w200-h142/Screenshot%20from%202024-04-18%2011-05-38.png"
+            alt="Media 1" onclick="adwLightbox(this)" style="max-width:280px">
+        </div>
+        <a class="adw-link-btn adw-blue" style="font-size:10px;word-break:break-all;margin-top:6px;display:inline-flex"
+          href="https://medialampung.disway.id/read/673159/man-ic-lampung-timur-gelar-penerimaan-siswa-baru-dan-louching-tanam-pohon-dan-bibit-buah-persiapan-adiwiyata" target="_blank">
+          🔗 Media Lampung Disway
+        </a>
+      </div>
+    </div>
+
+    <div class="adw-data-item">
+      <div class="adw-data-dot" style="background:#64b5f6"></div>
+      <div>
+        <div class="adw-img-center">
+          <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgvIVWAvkMorr4mJqB872h5shPoF_m8Xeh4qod_p2XzD0sHYZ9PSpoiUlggNQHWSmacSCCiMqkr1NPX7HMPwbImNKnTBqJGw7nXvGqkGj4yhDr7_7M0v0I_5Jdq_EZIKDH9d3xISJ7yqTSgsPp2Ya8AY65Dws2XkgmdJoKUQY1sOCK8PT6PFYFmcH9q32k/w200-h125/Screenshot%20from%202024-04-18%2011-07-51.png"
+            alt="Media 2" onclick="adwLightbox(this)" style="max-width:280px">
+        </div>
+        <a class="adw-link-btn adw-blue" style="font-size:10px;margin-top:6px;display:inline-flex"
+          href="https://kupastuntas.co/2024/01/15/man-insan-cendekia-lamtim-masuk-salah-satu-prototipe-madrasah-unggulan-berbasis-asrama-di-indonesia" target="_blank">
+          🔗 Kupas Tuntas
+        </a>
+      </div>
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ GALERI ══════════════════════════════════════════════ -->
+<div class="adw-section adw-collapsed" id="adw-galeri">
+  <div class="adw-section-head" onclick="adwToggle(this)">
+    <span class="adw-sec-icon">🖼️</span>
+    <h3>GALERI FOTO KEGIATAN</h3>
+    <span class="adw-sec-arrow">▼</span>
+  </div>
+  <div class="adw-section-body-outer"><div class="adw-section-body">
+
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjRJsnktJaGFGxnM8jw6c2yXhBdlplRA8ImNW7ogOI3Z7k8hgFSIm75YXaDou42aIsgpNg7ZV5vCyIC39gebwpLnc5l_dzIJQAvkI9P0qqHcodkuVmDCVcDy2IZV6VZE7weEFdK2jGbEVU46RdJRZjf0G61oc63pq8j9IfZI1IT9AW5QqfN3lbeq-HEZHc/w640-h640/GALERI%20ADIWIYATA.jpg"
+        alt="Galeri Adiwiyata" onclick="adwLightbox(this)">
+    </div>
+    <div class="adw-links-row" style="justify-content:center">
+      <a class="adw-link-btn adw-blue" href="https://arsipicku01.blogspot.com/p/galeri-adiwiyata.html" target="_blank">🔍 Lihat Semua Galeri</a>
+    </div>
+
+    <div class="adw-div"></div>
+    <div style="font-size:12px;color:rgba(255,255,255,.4);text-align:center;margin-bottom:6px">TELAH LEWAT</div>
+    <div style="font-size:13px;color:#a5d6a7;text-align:center;margin-bottom:10px">AJANG GREEN SCHOOL KABUPATEN LAMPUNG TIMUR 2026</div>
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjinq9UaOa2nJu_hSiCu7EqaFjFNM8R9KOlmV9OoqrqVgJr2110Bi7ZTb316YSrRchIIs-DuYgMvivMEw7gxGDEGLtxM0bkPaGEOxzIiEWX57QnPa467USKxwNLA-vujdK_EarqT9a-hW7Jab9zC0gmEcnNbiDRw9L1vA7JMzrATooj7bmBFrcu0ctpztg/w320-h160/IMG-20260203-WA0000.jpg"
+        alt="Green School 2026" onclick="adwLightbox(this)">
+    </div>
+
+    <!-- Waspada Announcement Image -->
+    <div class="adw-div"></div>
+    <div class="adw-img-center">
+      <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjglSBAZvOHcZeWYGrS2YesCqjPRCeH7aQ51ARnILvHQMjt_EUEv0_QL8YE8BSbIgIQHhcaH9Qsu21JhQblk9SXiElg-iqVbbu_5uzhlfYnrciVa-kZ-Qf9MUV2WGovyfiQvC-exsLGlMUqVfwieB688zOBMkfHRTFJxzDZopJBPxWw4AmK1zfUPhZJQ7w/w512-h640/waspada%20(1).png"
+        alt="Pengumuman Waspada" onclick="adwLightbox(this)" style="max-width:300px">
+    </div>
+
+  </div></div>
+</div>
+
+<!-- ══ FOOTER ══════════════════════════════════════════════ -->
+<div style="text-align:center;padding:20px;font-size:11px;color:rgba(255,255,255,.25)">
+  Adiwiyata MAN Insan Cendekia Lampung Timur &middot; #HijauBersamaKita
+</div>
+
+</div><!-- end #adw-wrap -->
+
+<!-- ══ POPUP MODAL ══════════════════════════════════════════ -->
+<div id="adw-popup" onclick="if(event.target===this)adwClosePopup()">
+  <div id="adw-popup-box">
+    <button class="adw-popup-close" onclick="adwClosePopup()">✕</button>
+    <span id="adw-popup-icon"></span>
+    <div id="adw-popup-title"></div>
+    <div id="adw-popup-body"></div>
+    <div id="adw-popup-tags"></div>
+  </div></div>
+</div>
+
+<!-- ══ LIGHTBOX ══════════════════════════════════════════════ -->
+<div id="adw-lightbox" onclick="adwCloseLightbox()">
+  <button id="adw-lb-close" onclick="adwCloseLightbox()">✕</button>
+  <img id="adw-lb-img" src="" alt="Preview">
+</div>
+
+<script>
+(function(){
+
+/* ── PARTICLES ── */
+var pt = document.getElementById('adw-particles');
+if(pt){
+  var c=['#4caf50','#81c784','#ffb74d','#64b5f6','#fff'];
+  for(var i=0;i<16;i++){
+    var d=document.createElement('div');
+    d.className='adw-pt';
+    d.style.cssText='--d:'+(7+Math.random()*12)+'s;--dl:'+(Math.random()*8)+'s;--x:'+(Math.random()*100)+'vw;--s:'+(3+Math.random()*5)+'px;background:'+c[Math.floor(Math.random()*c.length)];
+    pt.appendChild(d);
+  }
+}
+
+/* ── COUNTDOWN ── */
+(function(){
+  var deadline=new Date('2026-02-21T00:30:00+07:00').getTime();
+  function pad(n){return n<10?'0'+n:String(n)}
+  function tick(id,v){
+    var el=document.getElementById(id);
+    if(!el)return;
+    var nv=pad(v);
+    if(el.textContent!==nv){
+      el.textContent=nv;
+      el.classList.remove('adw-tick');
+      void el.offsetWidth;
+      el.classList.add('adw-tick');
+      setTimeout(function(){el.classList.remove('adw-tick')},200);
+    }
+  }
+  function run(){
+    var diff=deadline-Date.now();
+    if(diff<=0){
+      var b=document.getElementById('adw-cd-boxes');
+      if(b)b.innerHTML='<div class="adw-cd-expired">🌿 Hari Peduli Sampah Nasional 2026 telah berlalu. Sampai jumpa tahun depan!</div>';
+      return;
+    }
+    tick('cd-d',Math.floor(diff/86400000));
+    tick('cd-h',Math.floor((diff%86400000)/3600000));
+    tick('cd-m',Math.floor((diff%3600000)/60000));
+    tick('cd-s',Math.floor((diff%60000)/1000));
+  }
+  run();setInterval(run,1000);
+})();
+
+/* ── SECTION TOGGLE ── */
+window.adwToggle=function(head){
+  var sec=head.parentElement;
+  var isCollapsed=sec.classList.contains('adw-collapsed');
+  sec.classList.toggle('adw-collapsed');
+  // Jika baru dibuka, scroll pelan ke header seksi
+  if(isCollapsed){
+    setTimeout(function(){
+      head.scrollIntoView({behavior:'smooth',block:'start'});
+    },50);
+  }
+};
+
+/* ── POPUP ── */
+var popups={
+  sumber: {icon:'🗑',title:'Sumber Sampah',body:'Sampah anorganik di MAN IC Lampung Timur berasal dari tiga sumber utama: area asrama santri, gedung pembelajaran, dan nasabah individu di lingkungan madrasah.',tags:['Botol Plastik','Kertas','Kardus','Logam','Kaleng']},
+  asrama: {icon:'🏢',title:'Asrama',body:'Sumber sampah dari aktivitas keseharian santri di asrama, meliputi kemasan makanan, botol minuman, dan berbagai produk konsumsi harian.',tags:['Sampah Harian','Botol','Plastik','Kertas']},
+  gedung: {icon:'🏫',title:'Gedung Pembelajaran',body:'Sampah yang dihasilkan dari kegiatan belajar mengajar, administrasi, dan kegiatan mingguan/bulanan di lingkungan gedung sekolah.',tags:['Kertas','ATK Bekas','Buku Lama','Plastik']},
+  nasabah:{icon:'👥',title:'Nasabah',body:'Individu yang secara aktif menyetorkan sampah anorganik ke Bank Sampah, terdiri dari siswa-siswi dan guru serta karyawan yang tinggal di rumah dinas.',tags:['Siswa-Siswi','Guru','Karyawan','Sukarela']},
+  daily:  {icon:'📅',title:'Kegiatan Sehari-Hari',body:'Pengelolaan sampah rutin harian di asrama. Santri diwajibkan memilah sampah dan menempatkannya di tempat sampah terpilah yang telah disediakan.',tags:['Rutin','Harian','Pilah Sampah']},
+  weekly: {icon:'📆',title:'Kegiatan Mingguan/Bulanan',body:'Kegiatan terjadwal di gedung pembelajaran seperti kerja bakti, pengumpulan sampah massal, dan evaluasi program pengelolaan sampah madrasah.',tags:['Kerja Bakti','Terjadwal','Evaluasi','Kolektif']},
+  siswa:  {icon:'🎓',title:'Siswa-Siswi',body:'Seluruh siswa dan siswi MAN IC Lampung Timur berperan sebagai nasabah aktif Bank Sampah Insan Cendekia. Mereka menyetorkan sampah dan mendapatkan manfaat ekonomis.',tags:['Nasabah Aktif','Tabungan Sampah','Edukasi']},
+  guru:   {icon:'🧑‍🏫',title:'Guru & Karyawan Rumah Dinas',body:'Para guru dan karyawan yang tinggal di rumah dinas madrasah turut berpartisipasi sebagai nasabah Bank Sampah, memperkuat budaya daur ulang di lingkungan madrasah.',tags:['Rumah Dinas','Partisipasi','Teladan']},
+  tempat: {icon:'🗑',title:'Tempat Sampah Terpilah',body:'Sistem pemilahan sampah di sumber menggunakan wadah terpisah berdasarkan jenis. Petugas kebersihan bertugas mengumpulkan dan mengangkut sampah terpilah ke bank sampah.',tags:['Pilah di Sumber','Petugas Kebersihan','Pengangkutan']},
+  bank:   {icon:'⚖',title:'Bank Sampah Insan Cendekia',body:'Pusat pengelolaan sampah anorganik madrasah. Beroperasi setiap Sabtu dan Ahad. Nasabah dapat menabung sampah dan mendapatkan nilai ekonomis dari sampah yang disetorkan.',tags:['Sabtu & Ahad','Timbang Sampah','Tabungan','Daur Ulang']},
+  outcome:{icon:'💰',title:'Hasil Akhir — Hilir',body:'Tujuan akhir program: sampah anorganik yang semula tidak bernilai menjadi aset ekonomi bagi warga madrasah. Dana hasil penjualan sampah dapat digunakan untuk keperluan bersama.',tags:['Nilai Ekonomi','Lingkungan Bersih','Pemberdayaan','Berkah']}
+};
+
+window.adwPopup=function(key){
+  var d=popups[key];if(!d)return;
+  document.getElementById('adw-popup-icon').textContent=d.icon;
+  document.getElementById('adw-popup-title').textContent=d.title;
+  document.getElementById('adw-popup-body').textContent=d.body;
+  var html='';
+  d.tags.forEach(function(t){html+='<span class="adw-ptag">'+t+'</span>';});
+  document.getElementById('adw-popup-tags').innerHTML=html;
+  document.getElementById('adw-popup').classList.add('adw-open');
+};
+window.adwClosePopup=function(){
+  document.getElementById('adw-popup').classList.remove('adw-open');
+};
+
+/* ── LIGHTBOX ── */
+window.adwLightbox=function(img){
+  var src=img.src.replace(/\/s\d+\/|\/w\d+-h\d+\//,'/s0/');
+  document.getElementById('adw-lb-img').src=src;
+  document.getElementById('adw-lightbox').classList.add('adw-open');
+};
+window.adwCloseLightbox=function(){
+  document.getElementById('adw-lightbox').classList.remove('adw-open');
+};
+
+/* ── KEYBOARD ── */
+document.addEventListener('keydown',function(e){
+  if(e.key==='Escape'){adwClosePopup();adwCloseLightbox();}
+});
+
+/* ── SMOOTH SCROLL ── */
+document.querySelectorAll('.adw-nav-btn').forEach(function(a){
+  a.addEventListener('click',function(e){
+    var target=document.querySelector(this.getAttribute('href'));
+    if(target){
+      e.preventDefault();
+      // Buka dulu jika masih terlipat
+      if(target.classList.contains('adw-collapsed')){
+        target.classList.remove('adw-collapsed');
+      }
+      setTimeout(function(){
+        target.scrollIntoView({behavior:'smooth',block:'start'});
+      },50);
+    }
+  });
+});
+
+})();
+</script>
