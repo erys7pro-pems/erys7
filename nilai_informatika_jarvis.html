@@ -1,0 +1,563 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PHB Informatika — JARVIS System</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#000d1a;
+  --surface:#001428;
+  --surface2:#00213d;
+  --blue:#00c8ff;
+  --blue2:rgba(0,200,255,0.12);
+  --gold:#ffd700;
+  --green:#00ff88;
+  --red:#ff3344;
+  --orange:#ff9900;
+  --text:#a8d8ea;
+  --text2:rgba(168,216,234,0.55);
+  --text3:rgba(168,216,234,0.3);
+  --border:rgba(0,200,255,0.18);
+  --border2:rgba(0,200,255,0.08);
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);font-family:'Rajdhani',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden}
+
+/* SCAN LINE */
+.scanline{position:fixed;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,transparent 0%,var(--blue) 50%,transparent 100%);animation:scanAnim 5s linear infinite;z-index:9999;pointer-events:none;opacity:0.6}
+@keyframes scanAnim{0%{top:-10px}100%{top:100vh}}
+
+/* GRID BACKGROUND */
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(0,200,255,0.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,200,255,0.03) 1px,transparent 1px);background-size:40px 40px;pointer-events:none;z-index:0}
+
+.wrapper{position:relative;z-index:1;max-width:1200px;margin:0 auto;padding:20px 24px 48px}
+
+/* HEADER */
+.header{text-align:center;padding:32px 0 24px;position:relative}
+.header::after{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,var(--blue),transparent);margin-top:20px}
+.sys-label{font-family:'Orbitron',monospace;font-size:11px;letter-spacing:6px;color:var(--blue);opacity:0.7;margin-bottom:6px}
+.main-title{font-family:'Orbitron',monospace;font-size:32px;font-weight:900;color:#fff;letter-spacing:4px;text-shadow:0 0 30px rgba(0,200,255,0.5)}
+.sub-title{font-family:'Orbitron',monospace;font-size:13px;font-weight:400;color:var(--blue);letter-spacing:5px;margin-top:6px;opacity:0.85}
+.meta-row{display:flex;justify-content:center;gap:32px;margin-top:10px;font-size:12px;color:var(--text2);letter-spacing:2px}
+.meta-item::before{content:'◆ ';color:var(--blue);opacity:0.5}
+.kkm-note{display:inline-block;font-size:12px;letter-spacing:2px;color:var(--orange);border:1px solid rgba(255,153,0,0.3);padding:3px 12px;border-radius:2px;margin-top:8px}
+
+/* STAT CARDS */
+.stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:24px 0}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:14px 16px;position:relative;overflow:hidden;transition:border-color 0.2s}
+.stat-card:hover{border-color:var(--blue)}
+.stat-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px}
+.stat-card.total::before{background:linear-gradient(90deg,transparent,var(--blue),transparent)}
+.stat-card.lulus::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+.stat-card.tidak::before{background:linear-gradient(90deg,transparent,var(--red),transparent)}
+.stat-card.belum::before{background:linear-gradient(90deg,transparent,var(--orange),transparent)}
+.stat-lbl{font-size:11px;letter-spacing:2px;color:var(--text2);text-transform:uppercase;margin-bottom:4px}
+.stat-val{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;line-height:1}
+.stat-card.total .stat-val{color:var(--blue)}
+.stat-card.lulus .stat-val{color:var(--green)}
+.stat-card.tidak .stat-val{color:var(--red)}
+.stat-card.belum .stat-val{color:var(--orange)}
+.stat-pct{font-size:12px;color:var(--text3);margin-top:3px}
+
+/* CONTROLS */
+.controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:20px 0 16px}
+.ctrl-sep{width:1px;height:28px;background:var(--border);margin:0 4px}
+.ctrl-lbl{font-size:11px;letter-spacing:2px;color:var(--text2);text-transform:uppercase}
+.tab-btn{font-family:'Rajdhani',sans-serif;font-size:13px;font-weight:600;letter-spacing:2px;padding:7px 18px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;border-radius:2px;transition:all 0.2s;text-transform:uppercase}
+.tab-btn:hover{border-color:var(--blue);color:var(--blue);background:var(--blue2)}
+.tab-btn.active{border-color:var(--blue);color:var(--blue);background:var(--blue2);box-shadow:0 0 12px rgba(0,200,255,0.15)}
+.filter-btn{font-family:'Rajdhani',sans-serif;font-size:12px;font-weight:600;letter-spacing:1px;padding:6px 14px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;border-radius:2px;transition:all 0.2s;text-transform:uppercase}
+.filter-btn:hover{border-color:rgba(0,200,255,0.5);color:var(--text)}
+.filter-btn.f-all.active{border-color:var(--blue);color:var(--blue);background:rgba(0,200,255,0.08)}
+.filter-btn.f-lulus.active{border-color:var(--green);color:var(--green);background:rgba(0,255,136,0.08)}
+.filter-btn.f-tidak.active{border-color:var(--red);color:var(--red);background:rgba(255,51,68,0.08)}
+.filter-btn.f-belum.active{border-color:var(--orange);color:var(--orange);background:rgba(255,153,0,0.08)}
+.search-box{font-family:'Rajdhani',sans-serif;font-size:14px;letter-spacing:1px;padding:7px 14px;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:2px;outline:none;width:240px;transition:border-color 0.2s}
+.search-box:focus{border-color:var(--blue);box-shadow:0 0 8px rgba(0,200,255,0.12)}
+.search-box::placeholder{color:var(--text3)}
+.sort-wrap{display:flex;gap:6px;margin-left:auto}
+.sort-btn{font-family:'Rajdhani',sans-serif;font-size:11px;letter-spacing:1px;padding:5px 12px;background:transparent;border:1px solid var(--border);color:var(--text2);cursor:pointer;border-radius:2px;text-transform:uppercase;transition:all 0.2s}
+.sort-btn:hover{border-color:var(--blue);color:var(--blue)}
+.sort-btn.active{border-color:var(--blue);color:var(--blue);background:rgba(0,200,255,0.08)}
+
+/* MAIN LAYOUT */
+.main-layout{display:grid;grid-template-columns:1fr 320px;gap:16px;align-items:start}
+
+/* TABLE PANEL */
+.panel{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden}
+.panel-head{padding:10px 16px;border-bottom:1px solid var(--border2);display:flex;align-items:center;gap:8px;background:rgba(0,20,40,0.5)}
+.panel-dot{width:7px;height:7px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue);flex-shrink:0}
+.panel-title{font-family:'Orbitron',monospace;font-size:10px;letter-spacing:3px;color:var(--blue);text-transform:uppercase}
+.panel-count{font-size:11px;color:var(--text3);margin-left:auto;letter-spacing:1px}
+
+.tbl-wrap{overflow-x:auto;max-height:560px;overflow-y:auto}
+.tbl-wrap::-webkit-scrollbar{width:4px;height:4px}
+.tbl-wrap::-webkit-scrollbar-track{background:transparent}
+.tbl-wrap::-webkit-scrollbar-thumb{background:rgba(0,200,255,0.2);border-radius:2px}
+table{width:100%;border-collapse:collapse;font-size:13px}
+thead th{position:sticky;top:0;background:#00213d;padding:9px 12px;text-align:left;font-size:10px;letter-spacing:2px;color:var(--text2);font-weight:600;text-transform:uppercase;border-bottom:1px solid var(--border);font-family:'Orbitron',monospace;white-space:nowrap}
+tbody tr{border-bottom:1px solid var(--border2);cursor:pointer;transition:background 0.15s}
+tbody tr:hover{background:rgba(0,200,255,0.05)}
+tbody tr.selected{background:rgba(0,200,255,0.1);border-bottom-color:rgba(0,200,255,0.3)}
+td{padding:9px 12px;vertical-align:middle}
+.td-no{font-family:'Orbitron',monospace;font-size:10px;color:var(--text3);width:32px}
+.td-name{font-size:14px;font-weight:500;color:#e8f4f8}
+.td-cls{font-family:'Orbitron',monospace;font-size:10px;color:var(--blue);letter-spacing:1px}
+.td-score{font-family:'Orbitron',monospace;font-size:14px;font-weight:700;text-align:right;width:52px}
+.sc-100{color:var(--gold);text-shadow:0 0 8px rgba(255,215,0,0.4)}
+.sc-90{color:#00ff88}
+.sc-80{color:#00ddcc}
+.sc-75{color:#00c8ff}
+.sc-fail{color:var(--red)}
+.sc-na{color:var(--text3)}
+.badge{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:700;letter-spacing:1px;padding:3px 10px;border-radius:2px;text-transform:uppercase;white-space:nowrap}
+.badge-lulus{background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.35);color:#00ff88}
+.badge-tidak{background:rgba(255,51,68,0.1);border:1px solid rgba(255,51,68,0.35);color:#ff3344}
+.badge-belum{background:rgba(255,153,0,0.1);border:1px solid rgba(255,153,0,0.35);color:#ff9900}
+.dot-lulus::before{content:'●';color:#00ff88;font-size:8px;margin-right:4px}
+.dot-tidak::before{content:'●';color:#ff3344;font-size:8px;margin-right:4px}
+.dot-belum::before{content:'●';color:#ff9900;font-size:8px;margin-right:4px}
+.empty-row td{text-align:center;padding:40px;color:var(--text3);letter-spacing:2px;font-size:13px}
+
+/* SIDE PANEL */
+.side-panels{display:flex;flex-direction:column;gap:14px}
+.detail-placeholder{padding:28px 16px;text-align:center;color:var(--text3)}
+.hex-icon{font-size:32px;opacity:0.3;margin-bottom:8px}
+.dp-hint{font-size:12px;letter-spacing:2px}
+.detail-body{padding:16px}
+.db-name{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:#fff;line-height:1.3;margin-bottom:6px}
+.db-cls{display:inline-block;font-size:10px;letter-spacing:2px;padding:2px 10px;border:1px solid var(--blue);color:var(--blue);border-radius:2px;margin-bottom:12px}
+.score-display{display:flex;align-items:flex-end;gap:12px;margin:10px 0 14px}
+.score-big{font-family:'Orbitron',monospace;font-size:56px;font-weight:900;line-height:1}
+.score-side{flex:1;padding-bottom:4px}
+.score-grade{font-family:'Orbitron',monospace;font-size:20px;font-weight:700;color:var(--text2)}
+.score-bar-wrap{margin-top:6px}
+.score-bar-track{height:5px;background:rgba(0,200,255,0.08);border-radius:3px;overflow:hidden}
+.score-bar-fill{height:100%;border-radius:3px;transition:width 0.8s cubic-bezier(.4,0,.2,1)}
+.score-bar-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:3px}
+.info-table{width:100%;font-size:13px;border-collapse:collapse}
+.info-table tr{border-bottom:1px solid var(--border2)}
+.info-table tr:last-child{border-bottom:none}
+.info-table td{padding:6px 0}
+.info-key{color:var(--text2);width:50%}
+.info-val{font-weight:600;color:#e0f0f8;text-align:right}
+
+/* DIST CHART */
+.dist-wrap{padding:12px 14px}
+.bar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.bar-lbl{font-size:11px;color:var(--text2);min-width:58px;letter-spacing:0.5px}
+.bar-track{flex:1;height:18px;background:rgba(0,200,255,0.05);border-radius:2px;overflow:hidden;border:1px solid var(--border2)}
+.bar-fill{height:100%;display:flex;align-items:center;justify-content:flex-end;padding-right:6px;border-radius:2px;transition:width 0.7s ease;min-width:0}
+.bar-num{font-family:'Orbitron',monospace;font-size:9px;font-weight:700}
+
+/* CLASS SUMMARY */
+.cls-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px}
+.cls-card{background:rgba(0,200,255,0.04);border:1px solid var(--border2);border-radius:3px;padding:10px 12px}
+.cls-title{font-family:'Orbitron',monospace;font-size:11px;color:var(--blue);letter-spacing:2px;margin-bottom:6px}
+.cls-stat-row{display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px}
+.cls-stat-key{color:var(--text2)}
+.cls-stat-val{font-weight:600;color:#e0f0f8;font-family:'Orbitron',monospace;font-size:11px}
+
+/* FOOTER */
+.footer{text-align:center;padding:20px 0 10px;font-size:11px;color:var(--text3);letter-spacing:2px}
+.footer::before{content:'';display:block;height:1px;background:linear-gradient(90deg,transparent,var(--border),transparent);margin-bottom:12px}
+
+.no-result{text-align:center;padding:32px;color:var(--text3);font-size:13px;letter-spacing:2px}
+@media(max-width:900px){
+  .main-layout{grid-template-columns:1fr}
+  .stat-row{grid-template-columns:repeat(2,1fr)}
+  .side-panels{display:none}
+}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="wrapper">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="sys-label">⬡ J.A.R.V.I.S &nbsp;·&nbsp; Academic Intelligence System &nbsp;·&nbsp; v2.0 ⬡</div>
+    <div class="main-title">INFORMATIKA</div>
+    <div class="sub-title">PENILAIAN HARIAN BERSAMA · KELAS X</div>
+    <div class="meta-row">
+      <span class="meta-item">MAN INSAN CENDEKIA LAMPUNG TIMUR</span>
+      <span class="meta-item">ALGORITMA PEMROGRAMAN</span>
+      <span class="meta-item">MEI 2026</span>
+    </div>
+    <div style="margin-top:10px">
+      <span class="kkm-note">KKM : 74 — Lulus jika nilai ≥ 74</span>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stat-row" id="statRow"></div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <span class="ctrl-lbl">Kelas:</span>
+    <button class="tab-btn active" data-cls="ALL">SEMUA</button>
+    <button class="tab-btn" data-cls="X.A">X A</button>
+    <button class="tab-btn" data-cls="X.B">X B</button>
+    <button class="tab-btn" data-cls="X.C">X C</button>
+    <button class="tab-btn" data-cls="X.D">X D</button>
+    <div class="ctrl-sep"></div>
+    <button class="filter-btn f-all active" data-status="ALL">Semua Status</button>
+    <button class="filter-btn f-lulus" data-status="LULUS">✓ Lulus</button>
+    <button class="filter-btn f-tidak" data-status="TIDAK LULUS">✗ Tidak Lulus</button>
+    <button class="filter-btn f-belum" data-status="BELUM MENGERJAKAN">⚠ Belum</button>
+    <input class="search-box" type="text" id="searchInput" placeholder="🔍  Cari nama siswa...">
+    <div class="sort-wrap">
+      <button class="sort-btn active" id="sortScore">Nilai ↓</button>
+      <button class="sort-btn" id="sortName">Nama ↑</button>
+    </div>
+  </div>
+
+  <!-- MAIN LAYOUT -->
+  <div class="main-layout">
+    <!-- TABLE -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-dot"></div>
+        <div class="panel-title">Daftar Nilai Siswa</div>
+        <span class="panel-count" id="listCount"></span>
+      </div>
+      <div class="tbl-wrap">
+        <table id="mainTable">
+          <thead>
+            <tr>
+              <th class="td-no">#</th>
+              <th>Nama Siswa</th>
+              <th>Kelas</th>
+              <th style="text-align:right">Nilai</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="tableBody"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- SIDE -->
+    <div class="side-panels">
+      <div class="panel" id="detailCard">
+        <div class="panel-head"><div class="panel-dot"></div><div class="panel-title">Detail Siswa</div></div>
+        <div class="detail-placeholder">
+          <div class="hex-icon">⬡</div>
+          <div class="dp-hint">Klik siswa untuk detail</div>
+        </div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div class="panel-dot"></div><div class="panel-title">Distribusi Nilai</div></div>
+        <div class="dist-wrap" id="distChart"></div>
+      </div>
+      <div class="panel">
+        <div class="panel-head"><div class="panel-dot"></div><div class="panel-title">Rekapitulasi Per Kelas</div></div>
+        <div class="cls-grid" id="clsGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">JARVIS ACADEMIC SYSTEM &nbsp;·&nbsp; MAN INSAN CENDEKIA LAMPUNG TIMUR &nbsp;·&nbsp; INFORMATIKA 2026</div>
+</div>
+
+<script>
+const KKM = 74;
+const students = [
+  {name:"Abdalmighty Ahmad Syaffathino",cls:"X.A",score:95},
+  {name:"Ajeng Triadianti",cls:"X.A",score:90},
+  {name:"Amara Nurkhaulani",cls:"X.A",score:90},
+  {name:"Ashila Shofia Nasywa",cls:"X.A",score:90},
+  {name:"Azka Faeyza Alfarid",cls:"X.A",score:75},
+  {name:"DZAKY FADHIL WIJAYA",cls:"X.A",score:75},
+  {name:"Faeyza Nasywa Ashari",cls:"X.A",score:null},
+  {name:"Fathir Rizky Aditya",cls:"X.A",score:95},
+  {name:"Fiqrinata Maulana Yusuf",cls:"X.A",score:60},
+  {name:"Hayu Artaneisya",cls:"X.A",score:null},
+  {name:"Keisya Faiha Andzalna",cls:"X.A",score:90},
+  {name:"Labibah Mufida Hamid",cls:"X.A",score:90},
+  {name:"Mecha Mar'Atus Soleha",cls:"X.A",score:null},
+  {name:"Muhammad Fakhri Kamal",cls:"X.A",score:95},
+  {name:"Muhammad Yusuf Farras Yuliansyah",cls:"X.A",score:100},
+  {name:"Nadine Thawara Al Syaqni",cls:"X.A",score:null},
+  {name:"Naura Sakinah Jiva",cls:"X.A",score:null},
+  {name:"Rafif Isthofa Bastanta Tarigan",cls:"X.A",score:null},
+  {name:"Ruby 'Aqila Badridduja",cls:"X.A",score:90},
+  {name:"Suci Wulandari",cls:"X.A",score:null},
+  {name:"Taqy Azzam Alghani",cls:"X.A",score:95},
+  {name:"Zhafira Adelia Putri",cls:"X.A",score:null},
+  {name:"Jely Ananta Karena",cls:"X.A",score:null},
+  {name:"Adyan Arkaan Atallah",cls:"X.B",score:100},
+  {name:"Alif Maulidia",cls:"X.B",score:60},
+  {name:"Anedza Wali Dipajuga",cls:"X.B",score:95},
+  {name:"Assyifa Zahra Khairunnisa",cls:"X.B",score:95},
+  {name:"Azka Nawwafa Amani",cls:"X.B",score:100},
+  {name:"Echa Navalin Dexa",cls:"X.B",score:85},
+  {name:"Fakhri Akbar Lesmana",cls:"X.B",score:95},
+  {name:"Fatimatuzzahro Putri Praya",cls:"X.B",score:100},
+  {name:"Ghifari Fajar Efendi",cls:"X.B",score:85},
+  {name:"Ilham Falah Maulanan",cls:"X.B",score:90},
+  {name:"Keysha Amirasyifa Sopwan",cls:"X.B",score:90},
+  {name:"Lailatul Fitroh",cls:"X.B",score:85},
+  {name:"Muhammad Alden Arrafi",cls:"X.B",score:95},
+  {name:"Muhammad Zulqhulaiva",cls:"X.B",score:null},
+  {name:"Naila Resti Surya Kinanti",cls:"X.B",score:95},
+  {name:"Nayla Syarifa Herlistyo",cls:"X.B",score:null},
+  {name:"Rasya Herian Candra",cls:"X.B",score:95},
+  {name:"Sabrina Rahma Syarifa",cls:"X.B",score:95},
+  {name:"Sultan Ramadhan Pandeka Yasira",cls:"X.B",score:90},
+  {name:"Tsabithah Nurul Athifah",cls:"X.B",score:null},
+  {name:"Zulva Aulia",cls:"X.B",score:90},
+  {name:"Afham Ariya Wicaksana",cls:"X.C",score:95},
+  {name:"Alifa Dzatil Izzah",cls:"X.C",score:85},
+  {name:"Arhasan Aditya Raya Gani Putra",cls:"X.C",score:80},
+  {name:"Aurellia Adani",cls:"X.C",score:85},
+  {name:"Chalista Chalwa Mu'Nisa",cls:"X.C",score:null},
+  {name:"Emira Giza Humaira",cls:"X.C",score:100},
+  {name:"Falih Fadhlurrohman",cls:"X.C",score:90},
+  {name:"Filza Alya Nurabi",cls:"X.C",score:85},
+  {name:"Hafidh Fakhr A",cls:"X.C",score:90},
+  {name:"Javier Zhafran Habibie",cls:"X.C",score:95},
+  {name:"Khansa Khairina Uzma",cls:"X.C",score:95},
+  {name:"Lutfhia Al Zafiraa",cls:"X.C",score:100},
+  {name:"M Alfian Saputra",cls:"X.C",score:95},
+  {name:"Muhammad Rahid Athallah",cls:"X.C",score:85},
+  {name:"Mutia Ahsana Amala",cls:"X.C",score:null},
+  {name:"Nashwa Alikha Krisanti",cls:"X.C",score:100},
+  {name:"Neda Kalia Alfaqi",cls:"X.C",score:85},
+  {name:"Rizkia Asly Syifadini",cls:"X.C",score:100},
+  {name:"Syahdan Alvaro Juan",cls:"X.C",score:100},
+  {name:"Wahib Kaamil",cls:"X.C",score:100},
+  {name:"Aisyah Az Zahra",cls:"X.D",score:65},
+  {name:"Aline Ikhtiari Purnomo",cls:"X.D",score:80},
+  {name:"Arifah Fitri Hanifayanti Susilo",cls:"X.D",score:null},
+  {name:"Azka Abimanyu Ibadurrahman",cls:"X.D",score:null},
+  {name:"Daffa Hazim Rafeyfa",cls:"X.D",score:null},
+  {name:"Fadia Nabila Mukhtar",cls:"X.D",score:90},
+  {name:"Farah Aulia Anggraini",cls:"X.D",score:85},
+  {name:"Fina Nailatul Izzah",cls:"X.D",score:90},
+  {name:"Hafiza Khaira Lubna",cls:"X.D",score:90},
+  {name:"Khansa Tsabita",cls:"X.D",score:100},
+  {name:"M.Pijar Rakha Farant",cls:"X.D",score:100},
+  {name:"Muhammad Athir Rizqullah Arrazy",cls:"X.D",score:95},
+  {name:"Muhammad Sahril Adilla",cls:"X.D",score:80},
+  {name:"Nadihan Bima Saktia Nugraha",cls:"X.D",score:90},
+  {name:"Nathifa Nida Rayya",cls:"X.D",score:80},
+  {name:"Okseha Rojiza Walafia",cls:"X.D",score:null},
+  {name:"Roid Nawwar Khalish",cls:"X.D",score:null},
+  {name:"Sahal Mahfudz",cls:"X.D",score:55},
+  {name:"Syahroza Farras Shofa",cls:"X.D",score:80},
+  {name:"Yusuf Rafif Zamzami",cls:"X.D",score:90}
+];
+
+function getStatus(s){
+  if(s===null)return"BELUM MENGERJAKAN";
+  if(s>=KKM)return"LULUS";
+  return"TIDAK LULUS";
+}
+function getGrade(s){
+  if(s===null)return'-';
+  if(s>=90)return'A';if(s>=80)return'B';if(s>=75)return'C';if(s>=60)return'D';return'E';
+}
+function scoreClass(s){
+  if(s===null)return'sc-na';
+  if(s>=100)return'sc-100';if(s>=90)return'sc-90';if(s>=80)return'sc-80';if(s>=75)return'sc-75';return'sc-fail';
+}
+function badgeHtml(status){
+  if(status==='LULUS')return`<span class="badge badge-lulus">✓ LULUS</span>`;
+  if(status==='TIDAK LULUS')return`<span class="badge badge-tidak">✗ TIDAK LULUS</span>`;
+  return`<span class="badge badge-belum">⚠ BELUM MENGERJAKAN</span>`;
+}
+
+let curCls='ALL', curStatus='ALL', curSort='score', searchQ='';
+
+function getFiltered(){
+  let d=students.filter(r=>{
+    const cok=curCls==='ALL'||r.cls===curCls;
+    const sok=curStatus==='ALL'||getStatus(r.score)===curStatus;
+    const q=searchQ.toLowerCase();
+    const nok=!q||r.name.toLowerCase().includes(q);
+    return cok&&sok&&nok;
+  });
+  if(curSort==='score'){
+    d.sort((a,b)=>(b.score??-1)-(a.score??-1));
+  } else {
+    d.sort((a,b)=>a.name.localeCompare(b.name));
+  }
+  return d;
+}
+
+function renderStats(){
+  const base=curCls==='ALL'?students:students.filter(r=>r.cls===curCls);
+  const lulus=base.filter(r=>getStatus(r.score)==='LULUS').length;
+  const tidak=base.filter(r=>getStatus(r.score)==='TIDAK LULUS').length;
+  const belum=base.filter(r=>getStatus(r.score)==='BELUM MENGERJAKAN').length;
+  const total=base.length;
+  document.getElementById('statRow').innerHTML=`
+    <div class="stat-card total"><div class="stat-lbl">Total Siswa</div><div class="stat-val">${total}</div><div class="stat-pct">seluruh data</div></div>
+    <div class="stat-card lulus"><div class="stat-lbl">✓ Lulus</div><div class="stat-val">${lulus}</div><div class="stat-pct">${total?Math.round(lulus/total*100):0}% dari kelas</div></div>
+    <div class="stat-card tidak"><div class="stat-lbl">✗ Tidak Lulus</div><div class="stat-val">${tidak}</div><div class="stat-pct">${total?Math.round(tidak/total*100):0}% dari kelas</div></div>
+    <div class="stat-card belum"><div class="stat-lbl">⚠ Belum Mengerjakan</div><div class="stat-val">${belum}</div><div class="stat-pct">${total?Math.round(belum/total*100):0}% dari kelas</div></div>
+  `;
+}
+
+function renderTable(){
+  const data=getFiltered();
+  document.getElementById('listCount').textContent=data.length+' siswa';
+  const tbody=document.getElementById('tableBody');
+  if(!data.length){
+    tbody.innerHTML=`<tr class="empty-row"><td colspan="5">Tidak ada data yang sesuai</td></tr>`;
+    return;
+  }
+  tbody.innerHTML=data.map((r,i)=>{
+    const st=getStatus(r.score);
+    const sc=r.score!==null?r.score:'—';
+    const cls=r.cls.replace('X.','X ');
+    return`<tr data-idx="${i}" onclick="selectRow(${i})">
+      <td class="td-no">${String(i+1).padStart(2,'0')}</td>
+      <td class="td-name">${r.name}</td>
+      <td class="td-cls">${cls}</td>
+      <td class="td-score ${scoreClass(r.score)}">${sc}</td>
+      <td>${badgeHtml(st)}</td>
+    </tr>`;
+  }).join('');
+}
+
+function selectRow(idx){
+  const data=getFiltered();
+  const r=data[idx];
+  document.querySelectorAll('#tableBody tr').forEach((el,i)=>el.classList.toggle('selected',i===idx));
+  const st=getStatus(r.score);
+  const grade=getGrade(r.score);
+  const pct=r.score??0;
+  const barColor=r.score===null?'rgba(255,153,0,0.4)':r.score>=KKM?'#00ff88':'#ff3344';
+  const clsStudents=students.filter(x=>x.cls===r.cls&&x.score!==null);
+  const avg=clsStudents.length?Math.round(clsStudents.reduce((s,x)=>s+x.score,0)/clsStudents.length):0;
+  const rank=clsStudents.filter(x=>x.score>r.score).length+1;
+  const selisih=r.score!==null?r.score-avg:null;
+  const clsLabel=r.cls.replace('X.','X ');
+  document.getElementById('detailCard').innerHTML=`
+    <div class="panel-head"><div class="panel-dot"></div><div class="panel-title">Detail Siswa</div></div>
+    <div class="detail-body">
+      <div class="db-name">${r.name}</div>
+      <div class="db-cls">${clsLabel} · Informatika</div>
+      <div style="margin-bottom:12px">${badgeHtml(st)}</div>
+      <div class="score-display">
+        <div>
+          <div style="font-size:11px;letter-spacing:2px;color:var(--text2);margin-bottom:2px">NILAI</div>
+          <div class="score-big ${scoreClass(r.score)}">${r.score??'—'}</div>
+        </div>
+        <div class="score-side">
+          <div class="score-grade">Predikat: ${grade}</div>
+          <div class="score-bar-wrap">
+            <div class="score-bar-track"><div class="score-bar-fill" style="width:${pct}%;background:${barColor}"></div></div>
+            <div class="score-bar-labels"><span>0</span><span>KKM ${KKM}</span><span>100</span></div>
+          </div>
+        </div>
+      </div>
+      <table class="info-table">
+        <tr><td class="info-key">Status</td><td class="info-val" style="color:${st==='LULUS'?'#00ff88':st==='TIDAK LULUS'?'#ff3344':'#ff9900'}">${st}</td></tr>
+        ${r.score!==null?`
+        <tr><td class="info-key">Rank di kelas</td><td class="info-val">${rank} / ${clsStudents.length}</td></tr>
+        <tr><td class="info-key">Rata-rata kelas</td><td class="info-val">${avg}</td></tr>
+        <tr><td class="info-key">Selisih avg</td><td class="info-val" style="color:${selisih>=0?'#00ff88':'#ff3344'}">${selisih>=0?'+':''}${selisih}</td></tr>
+        `:`<tr><td class="info-key">Keterangan</td><td class="info-val" style="color:#ff9900">Nilai belum masuk</td></tr>`}
+      </table>
+    </div>
+  `;
+}
+
+function renderDist(){
+  const base=curCls==='ALL'?students:students.filter(r=>r.cls===curCls);
+  const buckets=[
+    {lbl:'Nilai 100',fn:r=>r.score===100,color:'#ffd700'},
+    {lbl:'Nilai 90–99',fn:r=>r.score>=90&&r.score<100,color:'#00ff88'},
+    {lbl:'Nilai 80–89',fn:r=>r.score>=80&&r.score<90,color:'#00ddcc'},
+    {lbl:'Nilai 75–79',fn:r=>r.score>=75&&r.score<80,color:'#00c8ff'},
+    {lbl:'Nilai 60–74',fn:r=>r.score>=60&&r.score<75,color:'#ff3344'},
+    {lbl:'Nilai < 60',fn:r=>r.score!==null&&r.score<60,color:'#aa1122'},
+    {lbl:'Blm Kerja',fn:r=>r.score===null,color:'#ff9900'},
+  ];
+  const counts=buckets.map(b=>base.filter(r=>b.fn(r)).length);
+  const mx=Math.max(...counts,1);
+  document.getElementById('distChart').innerHTML=buckets.map((b,i)=>`
+    <div class="bar-row">
+      <span class="bar-lbl">${b.lbl}</span>
+      <div class="bar-track">
+        <div class="bar-fill" style="width:${Math.round(counts[i]/mx*100)}%;background:${b.color}">
+          <span class="bar-num" style="color:rgba(0,10,20,0.85)">${counts[i]}</span>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+
+function renderClsSummary(){
+  const classes=['X.A','X.B','X.C','X.D'];
+  document.getElementById('clsGrid').innerHTML=classes.map(cls=>{
+    const d=students.filter(r=>r.cls===cls);
+    const lulus=d.filter(r=>getStatus(r.score)==='LULUS').length;
+    const tidak=d.filter(r=>getStatus(r.score)==='TIDAK LULUS').length;
+    const belum=d.filter(r=>getStatus(r.score)==='BELUM MENGERJAKAN').length;
+    const scored=d.filter(r=>r.score!==null);
+    const avg=scored.length?Math.round(scored.reduce((s,r)=>s+r.score,0)/scored.length):0;
+    return`<div class="cls-card">
+      <div class="cls-title">${cls.replace('X.','X ')}</div>
+      <div class="cls-stat-row"><span class="cls-stat-key">Lulus</span><span class="cls-stat-val" style="color:#00ff88">${lulus}</span></div>
+      <div class="cls-stat-row"><span class="cls-stat-key">Tdk Lulus</span><span class="cls-stat-val" style="color:#ff3344">${tidak}</span></div>
+      <div class="cls-stat-row"><span class="cls-stat-key">Blm Kerja</span><span class="cls-stat-val" style="color:#ff9900">${belum}</span></div>
+      <div class="cls-stat-row"><span class="cls-stat-key">Rata-rata</span><span class="cls-stat-val" style="color:#00c8ff">${avg}</span></div>
+    </div>`;
+  }).join('');
+}
+
+function render(){
+  renderStats();
+  renderTable();
+  renderDist();
+  renderClsSummary();
+}
+
+document.querySelectorAll('.tab-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    curCls=this.dataset.cls;
+    render();
+  });
+});
+
+document.querySelectorAll('.filter-btn').forEach(btn=>{
+  btn.addEventListener('click',function(){
+    document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+    this.classList.add('active');
+    curStatus=this.dataset.status;
+    renderTable();
+  });
+});
+
+document.getElementById('searchInput').addEventListener('input',function(){
+  searchQ=this.value;
+  renderTable();
+});
+
+document.getElementById('sortScore').addEventListener('click',function(){
+  curSort='score';
+  this.classList.add('active');
+  document.getElementById('sortName').classList.remove('active');
+  renderTable();
+});
+
+document.getElementById('sortName').addEventListener('click',function(){
+  curSort='name';
+  this.classList.add('active');
+  document.getElementById('sortScore').classList.remove('active');
+  renderTable();
+});
+
+render();
+</script>
+</body>
+</html>
