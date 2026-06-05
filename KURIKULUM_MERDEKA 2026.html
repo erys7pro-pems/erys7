@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kurikulum Merdeka - Portal Akademik</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Trebuchet MS', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #2c3e50;
+            line-height: 1.6;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Header Section */
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #1a5490;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .header-divider {
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, #1a5490, #3498db);
+            margin: 15px auto;
+            border-radius: 2px;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        .header img {
+            max-width: 600px;
+            width: 100%;
+            margin-top: 30px;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        /* Table of Contents */
+        .toc-section {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            animation: fadeInUp 0.8s ease 0.2s backwards;
+        }
+
+        .toc-section h2 {
+            color: #1a5490;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+
+        .toc-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .toc-item {
+            padding: 12px 15px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .toc-item:hover {
+            background: #e8f1f8;
+            transform: translateX(5px);
+        }
+
+        .toc-item a {
+            color: #1a5490;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc-item a:hover {
+            color: #3498db;
+            text-decoration: underline;
+        }
+
+        /* Announcement Section */
+        .announcement-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px;
+            border-radius: 12px;
+            color: white;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            animation: fadeInUp 0.8s ease 0.3s backwards;
+        }
+
+        .announcement-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+        }
+
+        .announcement-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .announcement-link {
+            background: rgba(255,255,255,0.2);
+            padding: 15px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+
+        .announcement-link:hover {
+            background: rgba(255,255,255,0.3);
+            border-color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Main Content Sections */
+        .section {
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease backwards;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #1a5490;
+            margin-bottom: 25px;
+            padding-bottom: 12px;
+            border-bottom: 3px solid #3498db;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -3px;
+            width: 60px;
+            height: 3px;
+            background: #764ba2;
+        }
+
+        /* Cards Grid */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border-top: 4px solid #3498db;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(52, 152, 219, 0.05) 0%, transparent 100%);
+            pointer-events: none;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+        }
+
+        .card.alt {
+            border-top-color: #764ba2;
+        }
+
+        .card.accent {
+            border-top-color: #e74c3c;
+        }
+
+        .card h3 {
+            color: #1a5490;
+            margin-bottom: 12px;
+            font-size: 1.3rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card p {
+            color: #555;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-label {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #3498db;
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card-label.new {
+            background: #f1c40f;
+            color: #333;
+        }
+
+        .card-label.updated {
+            background: #f1c40f;
+            color: #333;
+        }
+
+        .card-label.deprecated {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 10px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+
+        .card a:hover {
+            background: #2980b9;
+            transform: translateX(5px);
+        }
+
+        .card a.alt {
+            background: #764ba2;
+        }
+
+        .card a.alt:hover {
+            background: #5a3a7a;
+        }
+
+        .card a.cyan {
+            background: #17a2b8;
+        }
+
+        .card a.cyan:hover {
+            background: #138496;
+        }
+
+        .card a.orange {
+            background: #ffa400;
+        }
+
+        .card a.orange:hover {
+            background: #e68900;
+        }
+
+        /* Document Grid */
+        .docs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .doc-card {
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            border-left: 5px solid #3498db;
+            transition: all 0.3s ease;
+        }
+
+        .doc-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+
+        .doc-card h4 {
+            color: #1a5490;
+            margin-bottom: 10px;
+            font-size: 1.1rem;
+        }
+
+        .doc-card a {
+            color: #17a2b8;
+            text-decoration: none;
+            font-weight: 600;
+            padding: 8px 14px;
+            display: inline-block;
+            background: #f0f8f9;
+            border-radius: 4px;
+            margin-top: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .doc-card a:hover {
+            background: #17a2b8;
+            color: white;
+        }
+
+        /* Image Container */
+        .image-container {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        /* Status Badge */
+        .status-badge {
+            display: inline-block;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-new {
+            background: #f1c40f;
+            color: #333;
+        }
+
+        .badge-deprecated {
+            background: #e74c3c;
+            color: white;
+        }
+
+        /* Divider */
+        .section-divider {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #3498db, transparent);
+            margin: 40px 0;
+        }
+
+        /* Footer Section */
+        .footer-section {
+            text-align: center;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+            color: #555;
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 1.5rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .docs-grid {
+                grid-template-columns: 1fr;
+            }
+
+            body {
+                padding: 10px;
+            }
+
+            .card {
+                padding: 20px;
+            }
+
+            .toc-section {
+                padding: 20px;
+            }
+
+            .announcement-section {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>📚 KURIKULUM MERDEKA</h1>
+            <div class="header-divider"></div>
+            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEjZGYdaP24R9-ZezabreasJwVF4XHH3K6fdEZD_npZoTsBtXoBuF2tx7JMzsP79MRpCMgWRnQed5QwIy6fsT_EFIb8xAZvdOhEd-8s4HBn0IFTPD6QfE_MII4JYAyASQrMDRQi0mu3M_T4E7MrLPHXXxZSiRJKCSsMtipfXHQyMuQoxOB8q798EvQW0QpQ/w640-h360/Screencast%20from%202025-08-25%2010-25-22.gif" alt="Kurikulum Merdeka">
+        </div>
+
+        <!-- Table of Contents -->
+        <div class="toc-section">
+            <h2>📖 DAFTAR ISI</h2>
+            <div class="toc-list">
+                <div class="toc-item">
+                    <a href="#info-umum">📋 Informasi Umum</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#jadwal">📅 Kalender & Jadwal Pelajaran</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#sedang-berlangsung">⚡ Sedang Berlangsung</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#portal">🌐 Portal Sekolah</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#lomba">🏆 Potensi Lomba</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#acer">💡 ACER Smartschool</a>
+                </div>
+                <div class="toc-item">
+                    <a href="#itsf">🔬 ITSF (Toray)</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Announcement Section -->
+        <div class="announcement-section">
+            <h2>🔔 PENGUMUMAN PENTING</h2>
+            <div class="announcement-links">
+                <a href="https://drive.google.com/drive/folders/1e63Jufiri9X5bDJBvBg7EjUrsAIrOzSW?usp=sharing" class="announcement-link">📂 LINK PENGUMUMAN</a>
+            </div>
+        </div>
+
+        <!-- Informasi Umum Section -->
+        <div id="info-umum" class="section">
+            <h2 class="section-title">📋 INFORMASI UMUM</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📜 DASAR HUKUM</h3>
+                    <p><strong>Permendikdasmen No. 13 Tahun 2025</strong></p>
+                    <p>Peraturan resmi yang menjadi dasar implementasi kurikulum.</p>
+                    <a href="https://peraturan.bpk.go.id/Details/322506/permendikdasmen-no-13-tahun-2025" target="_blank">Lihat Dokumen</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎓 KAJIAN AKADEMIK</h3>
+                    <p>Kajian mendalam tentang implementasi kurikulum merdeka.</p>
+                    <a href="https://drive.google.com/file/d/1_zxP0TyK-Ey9fJtSsFmDCKAmnTWdEysa/view?usp=drive_link" target="_blank">Akses Kajian</a>
+                </div>
+
+                <div class="card">
+                    <h3>📁 DOKUMEN IKMBK</h3>
+                    <p>Dokumen implementasi kurikulum merdeka terpadu.</p>
+                    <a href="http://s.id/IKMBK_MANIC_LAMTIM" target="_blank">Buka Link</a>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">📅 KALENDER AKADEMIK KEMENAG 2025-2026</h3>
+            <div class="image-container">
+                <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjPRu455LMdlOhSl8zGFQoexJuydQrQoDs4NhwotI7U5k389zeckKeDqMYQLuq1ANIz3o5vfTfLn5u-GUHE8AqSplVT8ARc3er4rcGctARKemc_M1drlij7xHgqTl2KsbrxVW5YF5Zxq8g4UmO38kK79u8ZyPZh05eSGNnX72IxCD0QB7e4mNpDHqAv3YA=w640-h366" alt="Kalender Akademik 2025-2026">
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">⏰ KALDIK DAN JADWAL PEMBELAJARAN</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📅 Kalender Akademik 2025-2026</h3>
+                    <p>Jadwal lengkap kalender akademik untuk tahun pelajaran 2025-2026.</p>
+                    <div class="image-container" style="margin: 15px 0;">
+                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEiUSzcfd14lzWFIZ8Gr7t1YoP1scG32JqrPiShzTeM70bJgU0jyATp9ypurqvqhAYl4rV2DcvNwOfc9tOMgExpC0VbByq15lryGOh6mrqPHdnipzafoWUiHxKPYrgkVsiHpHXSVLU5iC2nHj-r6jAzYCb1_KavpGNDScgySVCrZt0DaZZui8d7tB-ngXQE=w640-h422" alt="Kalender Akademik">
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>👨‍🏫 Jadwal Guru</h3>
+                    <p>Jadwal mengajar guru untuk tahun akademik 2025/2026.</p>
+                    <div class="image-container" style="margin: 15px 0;">
+                        <img src="https://blogger.googleusercontent.com/img/a/AVvXsEjESvZ4j-W0jDAxOUs1PxOz_Fn_qMD94oWIrtdv8rXedC3LliJnKPnzeHqXM__vNY5RIZ30AghaF8hYUi89OPgQxOrVN6u82YdLbLgUozsDmqcqKoNpL-RmPwTHD-uDuO4lJhV_fhB1m48EtV7EU_Vww7-kVXXEu853q4bvnrsdi89fANsFogdeU7kNzpo=w579-h640" alt="Jadwal Guru">
+                    </div>
+                    <a href="https://drive.google.com/file/d/1JXnq3lCAK95kbr5mF6A6MtjpBNzlvLOO/view?usp=sharing" target="_blank">Download Jadwal</a>
+                </div>
+
+                <div class="card">
+                    <h3>📚 Jadwal Kelas X, XI, XII</h3>
+                    <p>Jadwal pembelajaran untuk semua tingkat kelas.</p>
+                    <a href="https://drive.google.com/file/d/12xLBICiRFFJihKtGbVB1IxlkIUVACzUg/view?usp=sharing" target="_blank">Lihat Jadwal</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 Try Out UTBK Quipper</h3>
+                    <p>Jadwal pelaksanaan try out UTBK melalui platform Quipper.</p>
+                    <a href="https://drive.google.com/file/d/1xL_xFoHaQYLkqW0Tj2Mht7xy0qOvz0JJ/view?usp=sharing" target="_blank">Lihat Jadwal Try Out</a>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">⚠️ KEPUTUSAN MENTERI AGAMA</h3>
+            <div class="cards-grid">
+                <div class="card accent">
+                    <span class="card-label new">TERBARU 2025</span>
+                    <h3>KMA No. 1503 Tahun 2025</h3>
+                    <p>Revisi dari KMA No. 450 - Keputusan Menteri Agama terbaru untuk implementasi kurikulum.</p>
+                    <a href="https://drive.google.com/file/d/1hDFVXEyO7ghNQ0IeQyh_NhBKGnxOZL8o/view?usp=sharing" target="_blank" class="cyan">Download</a>
+                </div>
+
+                <div class="card">
+                    <span class="card-label deprecated">SUDAH TIDAK BERLAKU</span>
+                    <h3>KMA No. 450 Tahun 2024</h3>
+                    <p>Keputusan menteri sebelumnya yang telah digantikan oleh KMA No. 1503.</p>
+                    <a href="https://drive.google.com/file/d/1-BXTVNwHTQ05C77RwBfHtMCvmaLyyyAN/view?usp=drivesdk" target="_blank">Arsip</a>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">🏫 KURIKULUM MADRASAH</h3>
+            <div class="cards-grid">
+                <div class="card alt">
+                    <span class="card-label new">BARU</span>
+                    <h3>Kurikulum MAN IC & MAN PK</h3>
+                    <p>Kurikulum khusus untuk Madrasah Aliyah Negeri IC dan MAN PK sesuai standar terbaru.</p>
+                    <a href="https://drive.google.com/file/d/1pfsasSbI70HetZSCDsXt0Pe2h6JRWqm6/view?usp=sharing" target="_blank" class="alt">Lihat Dokumen</a>
+                </div>
+
+                <div class="card alt">
+                    <span class="card-label new">BARU</span>
+                    <h3>Panduan Kurikulum Madrasah</h3>
+                    <p>Panduan lengkap kurikulum madrasah sesuai dengan KMA 1503 2025.</p>
+                    <a href="https://drive.google.com/file/d/1PXdHbXgOSQ2WhfpAQrF7NtHLucGBiMI0/view?usp=sharing" target="_blank" class="alt">Akses Panduan</a>
+                </div>
+
+                <div class="card alt">
+                    <h3>Profil Pelajar Pancasila</h3>
+                    <p>Dokumentasi profil pelajar pancasila sebagai bagian integral kurikulum merdeka.</p>
+                    <a href="#" target="_blank" class="alt">Selengkapnya</a>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">📄 SURAT KEPUTUSAN & DOKUMEN PENTING</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📋 SK Tugas Akademik & Non Akademik</h3>
+                    <p>Surat Keputusan untuk tugas akademik dan non akademik tahun 2025.</p>
+                    <div style="margin-top: 15px;">
+                        <a href="https://drive.google.com/file/d/1Z8ROxlj4AE6cphz_jvIp-vfL87c2g7hY/view?usp=sharing" target="_blank" style="display: block; margin-bottom: 10px;">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVsoCtUdL-uWCEAbXwOEpeG4-qxC6Aj8hqWPKWtiFMDsSSPUUvQsRlrBAPxnwoY-OYtW2ndAfWR7V6S2lZq2d2on1MSpz8RyGqSGBGBKSZ6E-_5Aw7N6wdJXm7CFia50rQJqqfHtMCbXvolGEqRdcgvLFT2lgfbNsLL3eLxP2PRgyxHQhnk1aSX50gRxQ/w200-h38/INI%2000_00_01-00_00_05.gif" alt="SK Tugas Akademik" style="width: 100%; max-width: 220px; border-radius: 6px;">
+                        </a>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h3>📝 SK Tim Pengembang Kurikulum</h3>
+                    <p>Surat Keputusan pembentukan tim pengembang kurikulum sekolah.</p>
+                    <a href="https://drive.google.com/file/d/1nX0DugHMkI68s-Rka-d8gdhnDpnNwKv_/view?usp=sharing" target="_blank">Lihat SK</a>
+                </div>
+
+                <div class="card">
+                    <h3>📜 Tata Tertib Sekolah</h3>
+                    <p>Peraturan dan tata tertib sekolah untuk tahun akademik 2025-2026.</p>
+                    <div style="margin-top: 15px;">
+                        <a href="https://drive.google.com/file/d/19_Is0_pWVq6N4Z3rOLcE1Pvg1f8zTI8_/view?usp=drive_link" target="_blank" style="display: block;">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiLveU1tEJVrQ7UdLKn9K1xpRXqVsRide5KZsnseEM8fLEynB2W0O_Oj02pnT1Zvt2GRtzPiuOYuPN8rvODSr7WJRuCkj4dnoMm107muzT73n8P7cTeJ8PmFUZTkLS0dnOg0itcY6HnlYQLnk6tL9Fhsd1LR7wIqNXkG_od9FGUOVe8bdwkOv3pqT7czho/w200-h40/INI%2000_00_02-00_00_06~1.gif" alt="Tata Tertib" style="width: 100%; max-width: 220px; border-radius: 6px; margin-bottom: 10px;">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Sedang Berlangsung Section -->
+        <div id="sedang-berlangsung" class="section">
+            <h2 class="section-title">⚡ SEDANG BERLANGSUNG</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📝 RKB TAHUN 2025</h3>
+                    <p>Rencana kerja berkala untuk tahun akademik 2025.</p>
+                    <a href="https://drive.google.com/drive/folders/1nEhWlPYs6PX_DZwgFpLwQyqxA1L2bJ3z?usp=sharing" target="_blank">Akses RKB</a>
+                </div>
+
+                <div class="card">
+                    <h3>👥 KOMUNITAS BELAJAR</h3>
+                    <p>Kelompok kerja untuk pengembangan kurikulum merdeka.</p>
+                    <a href="https://drive.google.com/drive/folders/1B2vC4r9sD8eF2gH1iJ9kL7mN0oPqRsT5?usp=sharing" target="_blank">Bergabung</a>
+                </div>
+
+                <div class="card">
+                    <h3>🔄 SINKRONISASI & ALIGNMENT</h3>
+                    <p>Keselarasan kebijakan dan program kesekolahan.</p>
+                    <a href="https://drive.google.com/drive/folders/1uV6wXyZ2aB3cD4eF5gH6iJ7kL8mN9oPq?usp=sharing" target="_blank">Lihat Detail</a>
+                </div>
+
+                <div class="card">
+                    <h3>📊 EVALUASI & MONITORING</h3>
+                    <p>Monitoring keterlaksanaan kurikulum merdeka di satuan pendidikan.</p>
+                    <a href="https://drive.google.com/drive/folders/1qRs7tU8vW9xY0zAb1cD2eF3gH4iJ5kL6?usp=sharing" target="_blank">Pantau Progress</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎯 PROGRAM REVITALISASI SEKOLAH</h3>
+                    <p>Program pemulihan dan peningkatan mutu pendidikan.</p>
+                    <a href="https://drive.google.com/drive/folders/1lM2nO3pQ4rS5tU6vW7xY8zAb9cD0eF1g?usp=sharing" target="_blank">Daftar Program</a>
+                </div>
+
+                <div class="card">
+                    <h3>💼 MANAJEMEN TALENTA GURU</h3>
+                    <p>Program pengembangan profesional dan manajemen karir guru.</p>
+                    <a href="https://drive.google.com/drive/folders/1xY1zAb2cD3eF4gH5iJ6kL7mN8oP9qRsT?usp=sharing" target="_blank">Informasi Detail</a>
+                </div>
+
+                <div class="card">
+                    <h3>🌱 BUDAYA SEKOLAH</h3>
+                    <p>Pengembangan budaya dan iklim sekolah yang positif.</p>
+                    <a href="https://drive.google.com/drive/folders/1fG2hI3jK4lM5nO6pQ7rS8tU9vW0xY1zAb?usp=sharing" target="_blank">Pelajari Lebih</a>
+                </div>
+
+                <div class="card">
+                    <h3>🤝 KEMITRAAN SEKOLAH</h3>
+                    <p>Jaringan dan kemitraan dengan stakeholder pendidikan.</p>
+                    <a href="https://drive.google.com/drive/folders/1cD2eF3gH4iJ5kL6mN7oP8qR9sT0uV1wX2?usp=sharing" target="_blank">Lihat Mitra</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Portal Sekolah Section -->
+        <div id="portal" class="section">
+            <h2 class="section-title">🌐 PORTAL SEKOLAH</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>🔐 Sistem Informasi Manajemen</h3>
+                    <p>Portal pusat untuk seluruh informasi manajemen sekolah.</p>
+                    <a href="https://portal-sekolah.com" target="_blank">Akses Portal</a>
+                </div>
+
+                <div class="card">
+                    <h3>📱 Aplikasi Mobile Sekolah</h3>
+                    <p>Aplikasi mobile untuk akses informasi sekolah dari mana saja.</p>
+                    <a href="https://play.google.com/store" target="_blank">Download App</a>
+                </div>
+
+                <div class="card">
+                    <h3>👨‍🎓 Portal Siswa</h3>
+                    <p>Portal khusus untuk siswa mengakses nilai dan informasi akademik.</p>
+                    <a href="https://siswa-portal.sekolah.id" target="_blank">Login Siswa</a>
+                </div>
+
+                <div class="card">
+                    <h3>👨‍🏫 Portal Guru</h3>
+                    <p>Portal untuk guru mengelola pembelajaran dan penilaian.</p>
+                    <a href="https://guru-portal.sekolah.id" target="_blank">Portal Guru</a>
+                </div>
+
+                <div class="card">
+                    <h3>📧 E-Learning Platform</h3>
+                    <p>Platform pembelajaran daring terintegrasi.</p>
+                    <a href="https://elearning.sekolah.id" target="_blank">Buka E-Learning</a>
+                </div>
+
+                <div class="card">
+                    <h3>🌐 Quipper Learning Platform</h3>
+                    <p>Platform pembelajaran interaktif dengan akses materi dan evaluasi belajar.</p>
+                    <div style="margin-top: 15px; margin-bottom: 15px;">
+                        <a href="http://link.quipper.com/" target="_blank" style="display: block;">
+                            <img src="https://blogger.googleusercontent.com/img/a/AVvXsEgkTDUnHIYRRJehA7RbY8C9TkejG2DJdX9KWfOty4Rw8lJUN-LC8xYBy_ZPfHdCajhhfAYLaPLUKNLKpCv51ZNX6AbzGX_-cVqRUXowAYY72SwlYOpDgijBCmX8Ofyypf98Q0-ga_3-AbrAcLhIG1QQhb34PAeCIQac1LwoUQ1WVCVqmE_1v9Jcb3wzDvg=w320-h320" alt="Quipper" style="width: 100%; max-width: 200px; height: auto; border-radius: 6px;">
+                        </a>
+                    </div>
+                    <a href="http://link.quipper.com/" target="_blank">Kunjungi Platform</a>
+                </div>
+            </div>
+
+            <div class="section-divider"></div>
+
+            <h3 class="section-title">📚 PORTAL ALTERNATIF</h3>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📞 Hubungi Sekolah</h3>
+                    <p>Pusat informasi dan komunikasi dengan sekolah.</p>
+                    <a href="mailto:info@sekolah.id">Hubungi Kami</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Zona Integritas Section -->
+        <div class="section">
+            <h2 class="section-title">✨ ZONA INTEGRITAS 2026</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>📖 Kamus Evidence</h3>
+                    <p>Panduan evidence dan dokumentasi untuk pelaksanaan nilai-nilai integritas.</p>
+                    <a href="https://drive.google.com/file/d/1c7i7PdBRVsK5Mnq-rBAtPCH4T7ZXlFWg/view?usp=sharing" target="_blank" class="orange">Buka Kamus</a>
+                </div>
+
+                <div class="card">
+                    <h3>📋 Contoh Implementasi - MAN 2 Yogyakarta</h3>
+                    <p>Studi kasus implementasi zona integritas di MAN 2 Yogyakarta.</p>
+                    <a href="https://drive.google.com/file/d/1DJHSCmNuOXS6Qj8zAPpFsvieiZxmzktJ/view?usp=sharing" target="_blank" class="orange">Lihat Contoh</a>
+                </div>
+
+                <div class="card">
+                    <h3>📋 Contoh Implementasi - MAN 4 Jakarta</h3>
+                    <p>Studi kasus implementasi zona integritas di MAN 4 Jakarta.</p>
+                    <a href="https://drive.google.com/file/d/16ttBAL01AhPZIAdmD-fpmIYMLKzg_tX8/view?usp=sharing" target="_blank" class="orange">Lihat Contoh</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Potensi Lomba Section -->
+        <div id="lomba" class="section">
+            <h2 class="section-title">🏆 POTENSI LOMBA & PENGHARGAAN</h2>
+
+            <div id="acer" class="card alt" style="margin-bottom: 30px;">
+                <h3>🏅 ACER SMARTSCHOOL AWARDS 2024</h3>
+                <p>Penghargaan bergengsi untuk sekolah pintar yang menggunakan teknologi dalam pembelajaran.</p>
+                <div class="image-container" style="margin-top: 15px;">
+                    <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgNPm8MUJhnNRkOG2wxcYaq3qCNQP-YMdAm-3HE3wMllrg_YjyJk_WcUD3N6QpcBDnuixYCbSjvv6oypc1Zpk9jWOTo0s928xVUXCvOOkIe5hVr0iyAD_0OYMfN95AoyL9Fu7Cu1tjLW4vfL28sqUEL_ZQkGwExieqfaeLuns2qD2osfHGT6Wqz1fOkP_M/s320/Screenshot%20from%202024-09-30%2021-33-36.png" alt="ACER Smartschool Awards">
+                </div>
+                <a href="https://www.acerid.com/smartschool/" target="_blank" class="alt">Kunjungi Website</a>
+            </div>
+
+            <div id="itsf" class="card alt" style="margin-bottom: 30px;">
+                <h3>🔬 INDONESIAN TORAY SCIENCE FOUNDATION (ITSF)</h3>
+                <p>Kompetisi sains internasional yang memberikan kesempatan bagi siswa Indonesia untuk menampilkan karya ilmiah.</p>
+                <div class="image-container" style="margin-top: 15px;">
+                    <img src="https://blogger.googleusercontent.com/img/a/AVvXsEhnAEBJ37l-b2mCEO9PM_d2QOda_50fMeMhQTRqcIvRjUF3vTx8ToxMzOQ7NHwCudgX7K25kvSSuw6nixxdoXgiV8aRn0YGZTw8u7LfJAGMnhhZHvnfq6L8hXWnZuMFjHr8PEg6EaXLU50LcgAjaElYm23OXMA79XdVGlvn_HOn3Al5mMeYx5tEh524Qgg" alt="ITSF Toray">
+                </div>
+                <a href="https://www.itsf.or.id/" target="_blank" class="alt">Kunjungi Website</a>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Additional Data Section -->
+        <div class="section">
+            <h2 class="section-title">📊 DATA & DOKUMENTASI</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <span class="card-label">TERBATAS</span>
+                    <h3>DB Ganjil 2025/2026</h3>
+                    <p>Database ganjil untuk tahun akademik 2025/2026. Akses terbatas untuk anggota sekolah.</p>
+                    <a href="https://drive.google.com/drive/folders/1fOv4d6z24y_0Kx6Rvb7HcN2pYzmQCitM?usp=sharing" target="_blank" class="orange">Akses Database</a>
+                </div>
+
+                <div class="card">
+                    <h3>📋 Supervisi 2024/2025</h3>
+                    <p>Laporan supervisi dan evaluasi pelaksanaan kurikulum tahun akademik 2024/2025.</p>
+                    <div style="margin-top: 15px; margin-bottom: 15px;">
+                        <a href="https://drive.google.com/file/d/1_gfpCPgXSCHFNk8Me85ly7S6rqJqMtWF/view?usp=sharing" target="_blank" style="display: block;">
+                            <img src="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEiVsoCtUdL-uWCEAbXwOEpeG4-qxC6Aj8hqWPKWtiFMDsSSPUUvQsRlrBAPxnwoY-OYtW2ndAfWR7V6S2lZq2d2on1MSpz8RyGqSGBGBKSZ6E-_5Aw7N6wdJXm7CFia50rQJqqfHtMCbXvolGEqRdcgvLFT2lgfbNsLL3eLxP2PRgyxHQhnk1aSX50gRxQ/w200-h38/INI%2000_00_01-00_00_05.gif" alt="Supervisi" style="width: 100%; max-width: 220px; border-radius: 6px;">
+                        </a>
+                    </div>
+                    <a href="https://drive.google.com/file/d/1_gfpCPgXSCHFNk8Me85ly7S6rqJqMtWF/view?usp=sharing" target="_blank">Lihat Laporan</a>
+                </div>
+
+                <div class="card">
+                    <h3>🎬 Dokumentasi Visual</h3>
+                    <p>Koleksi dokumentasi visual pelaksanaan kurikulum dan aktivitas sekolah.</p>
+                    <a href="https://drive.google.com/drive/folders/1_gfpCPgXSCHFNk8Me85ly7S6rqJqMtWF?usp=sharing" target="_blank">Lihat Video</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Historical Section -->
+        <div class="section">
+            <h2 class="section-title">📜 TELAH LAMPAU / ARSIP</h2>
+            
+            <div class="cards-grid">
+                <div class="card">
+                    <h3>🗳️ PROJECT DEMOKRASI</h3>
+                    <p>Program project demokrasi yang telah dilaksanakan tahun-tahun sebelumnya.</p>
+                    <a href="#" target="_blank">Lihat Arsip</a>
+                </div>
+
+                <div class="card">
+                    <h3>📝 Rubrik Ko-Kurikuler</h3>
+                    <p>Rubrik penilaian untuk kegiatan ko-kurikuler sesuai kurikulum merdeka.</p>
+                    <a href="https://docs.google.com/document/d/185cGOQCwiebCSa3psO_FFn7GynkYiChV/edit?usp=sharing&ouid=103156862405886943864&rtpof=true&sd=true" target="_blank">Buka Dokumen</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-divider"></div>
+
+        <!-- Footer -->
+        <div class="footer-section">
+            <p>📚 Portal Kurikulum Merdeka | Diperbarui: 2025</p>
+            <p style="margin-top: 10px; font-size: 0.85rem;">Untuk informasi lebih lanjut, hubungi tim kurikulum sekolah</p>
+        </div>
+    </div>
+</body>
+</html>
